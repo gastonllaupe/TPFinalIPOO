@@ -150,7 +150,7 @@ class Viaje{
 
     public function hayPasajesDisponible(){
         $disponible = false;
-        if (count($this->getPasajeros) < $this->getPasajeMax){
+        if (count($this->getPasajeros()) < $this->getPasajeMax()){
             $disponible = true;
         }
         return $disponible;
