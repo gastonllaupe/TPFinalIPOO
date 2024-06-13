@@ -3,9 +3,6 @@ include_once "BaseDatos.php";
 
 
 class Pasajero extends Persona{
-    private $nrodoc;
-    private $nombre;
-    private $apellido;
     private $telefono;
     private $numAsiento;
     private $numTicket;
@@ -94,7 +91,7 @@ class Pasajero extends Persona{
 		 return $resp;
 	}	
 
-    public static function listar($condicion=""){
+    public function listar($condicion=""){
 	    $arreglo = null;
 		$base=new BaseDatos();
 		$consulta="Select * from pasajero ";
@@ -138,7 +135,6 @@ class Pasajero extends Persona{
 		 }
 		return $resp;
 	}
-
 
 
     public function __toString(){
