@@ -2,9 +2,6 @@
 include_once "BaseDatos.php";
 
 class ResponsableV extends Persona{
-    private $nrodoc;
-	private $nombre;
-	private $apellido;
     private $numeroEmpleado;
     private $numeroLicencia;
     private $mensajeoperacion;
@@ -42,7 +39,7 @@ class ResponsableV extends Persona{
 	}
 
     public function cargar($nrodoc,$nombre,$apellido,$numeroEmpleado=null,$numeroLicencia=null){
-        parent::cargar($NroD, $Nom, $Ape);
+        parent::cargar($nrodoc, $nombre, $apellido);
         $this->setNumero($numeroEmpleado);
         $this->setLicencia($numeroLicencia);
     }

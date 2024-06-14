@@ -16,7 +16,7 @@ class Viaje{
         $this->pasajeros = $pasaje;
         $this->responsableV = $responsable;
         $this->costoViaje=$cost;
-        $this->costoPasajeros = definirCostoPasajeros();
+        $this->costoPasajeros = $this->definirCostoPasajeros();
     }
 
     public function getCodigo (){
@@ -143,7 +143,7 @@ class Viaje{
             $this->setPasajeros($arrayPasajerosCopia);
             $nuevoCosto = $this->definirCostoPasajeros();
             $this->setCostoP($nuevoCosto);
-            $costoFP = definirCostoUnPasajero($objPasajero);
+            $costoFP = $this->definirCostoUnPasajero($objPasajero);
         }
         return $costoFP;
     }
