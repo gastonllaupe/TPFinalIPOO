@@ -1,7 +1,6 @@
 <?php
 include_once "BaseDatos.php";
 
-
 class Pasajero extends Persona{
     private $telefono;
     private $numAsiento;
@@ -115,6 +114,22 @@ class Pasajero extends Persona{
 		 }	
 		 return $arreglo;
 	}	
+
+	public function modificar(){
+        $rta = false;
+        $base = new BaseDatos();
+        $consulta = "UPDATE pasajero SET telefono = {$this->getTelefono()}, nombre = '{$this->getNombre()}', apellido = '{$this->getApellido()}', numasiento = '{$this->getAsiento()}', numticket = '{$this->getTicket()}' WHERE nrodoc = {$this->getNrodoc()}";
+        if($base->Iniciar()){
+            if($base->Ejecutar($consulta)){
+                $rta = true;
+            }else{
+                $this->setmensajeoperacion($base->getError());
+            }
+        }else{
+            $this->setmensajeoperacion($base->getError());
+        }
+        return $rta;
+    }
 
     public function insertar(){
 		$base=new BaseDatos();
