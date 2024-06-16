@@ -67,13 +67,13 @@ class Pasajero extends Persona{
 	 */		
     public function Buscar($dni){
 		$base=new BaseDatos();
-		$consulta="Select * from estudiante where nrodoc=".$dni;
+		$consulta="Select * from pasajero where nrodoc=".$dni;
 		$resp= false;
 		if($base->Iniciar()){
 		    if($base->Ejecutar($consulta)){
 				if($row2=$base->Registro()){	
 				    parent::Buscar($dni);
-				    $this->setTelefono($row2['carrera']);
+				    $this->setTelefono($row2['ptelefono']);
                     $this->setAsiento($row2['asiento']);
                     $this->setTicket($row2['ticket']);
 					$resp= true;
@@ -103,7 +103,7 @@ class Pasajero extends Persona{
 			    $arreglo= array();
 				while($row2=$base->Registro()){
 					$obj=new Pasajero();
-					$obj->Buscar($row2['nrodoc']);
+					$obj->Buscar($row2['pdocumento']);
 					array_push($arreglo,$obj);
 				}
 		 	}	else {
@@ -118,7 +118,7 @@ class Pasajero extends Persona{
 	public function modificar(){
         $rta = false;
         $base = new BaseDatos();
-        $consulta = "UPDATE pasajero SET telefono = {$this->getTelefono()}, nombre = '{$this->getNombre()}', apellido = '{$this->getApellido()}', numasiento = '{$this->getAsiento()}', numticket = '{$this->getTicket()}' WHERE nrodoc = {$this->getNrodoc()}";
+        $consulta = "UPDATE pasajero SET ptelefono = {$this->getTelefono()}, pnombre = '{$this->getNombre()}', papellido = '{$this->getApellido()}', numasiento = '{$this->getAsiento()}', numticket = '{$this->getTicket()}' WHERE pdocumento = {$this->getNrodoc()}";
         if($base->Iniciar()){
             if($base->Ejecutar($consulta)){
                 $rta = true;
@@ -136,7 +136,7 @@ class Pasajero extends Persona{
 		$resp= false;
 		
 		if(parent::insertar()){
-		    $consultaInsertar="INSERT INTO estudiante(nrodoc, telefono, numAsiento, numTicket)
+		    $consultaInsertar="INSERT INTO pasajero(pdocumento, ptelefono, numAsiento, numTicket)
 				VALUES (".$this->getNrodoc().",'".$this->getTelefono()."','".$this->getAsiento()."','".$this->getTicket()."')";
 		    if($base->Iniciar()){
 		        if($base->Ejecutar($consultaInsertar)){
