@@ -134,7 +134,7 @@ function mostrarMenu() {
         if ($viaje->insertar()) {
             echo "Viaje creado con éxito.";
         } else {
-            echo "Error al crear viaje: " . $viaje->getmensajeoperacion();
+            echo "Error al crear viaje: " . $viaje->getMensaje();
         } 
     }
 
@@ -145,7 +145,7 @@ function mostrarMenu() {
             if ($viaje->modificar()) {
                 echo "Viaje modificado con éxito.";
             } else {
-                echo "Error al modificar viaje: " . $viaje->getmensajeoperacion();
+                echo "Error al modificar viaje: " . $viaje->getMensaje();
             }
         } else {
             echo "Viaje no encontrado.";
@@ -158,7 +158,7 @@ function mostrarMenu() {
             if ($viaje->eliminar()) {
                 echo "Viaje eliminado con éxito.";
             } else {
-                echo "Error al eliminar viaje: " . $viaje->getmensajeoperacion();
+                echo "Error al eliminar viaje: " . $viaje->getMensaje();
             }
         } else {
             echo "Viaje no encontrado.";
