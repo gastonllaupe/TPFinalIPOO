@@ -37,6 +37,4 @@ CREATE TABLE pasajero (
 	idviaje bigint,
     PRIMARY KEY (pasajero),
 	FOREIGN KEY (idviaje) REFERENCES viaje (idviaje)	
-    )ENGINE=InnoDB DEFAULT CHARSET=utf8; 
- 
-  
+    )ENGINE=InnoDB DEFAULT CHARSET=utf8;
