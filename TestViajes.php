@@ -134,30 +134,29 @@ function listarArray($array) {
     }
 
     // Funcion que muestra las opciones de modificar la empresa
-function opcionesModificarEmpresa($empresa)
-{
-    do {
-        echo "\n>>>>>>>>>>>>>>>>>>>>MODIFICACIONES EMPRESA<<<<<<<<<<<<<<<<<<<<
-        1) Nombre.
-        2) Direccion. 
-        0) Volver atras. \n";
-        $opcion = trim(fgets(STDIN));
-        switch ($opcion) {
-            case 1:
-                echo "Ingrese el nuevo nombre: ";
-                $nuevo = trim(fgets(STDIN));
-                $empresa->setEnombre($nuevo);
-                modificarEmpresa($empresa);
-            break;
-            case 2:
-                echo "Ingrese la nueva direccion: ";
-                $nuevo = trim(fgets(STDIN));
-                $empresa->setEdireccion($nuevo);
-                modificarEmpresa($empresa);
-            break;
-            default:
-                "Opcion incorrecta.\n";
-            }
+    function opcionesModificarEmpresa($empresa) {
+        do {
+            echo "\n>>>>>>>>>>>>>>>>>>>>MODIFICACIONES EMPRESA<<<<<<<<<<<<<<<<<<<<
+            1) Nombre.
+            2) Direccion. 
+            0) Volver atras. \n";
+            $opcion = trim(fgets(STDIN));
+            switch ($opcion) {
+                case 1:
+                    echo "Ingrese el nuevo nombre: ";
+                    $nuevo = trim(fgets(STDIN));
+                    $empresa->setEnombre($nuevo);
+                    modificarEmpresa($empresa);
+                break;
+                case 2:
+                    echo "Ingrese la nueva direccion: ";
+                    $nuevo = trim(fgets(STDIN));
+                    $empresa->setEdireccion($nuevo);
+                    modificarEmpresa($empresa);
+                break;
+                default:
+                    "Opcion incorrecta.\n";
+                }
         } while ($opcion != 0);
     }
 
@@ -308,7 +307,7 @@ function opcionesModificarEmpresa($empresa)
             echo "Viaje creado con éxito.";
         } else {
             echo "Error al crear viaje: " . $viaje->getMensaje();
-        } 
+        }
     }
 
     function modificarViaje($viaje) {
