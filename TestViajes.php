@@ -83,7 +83,7 @@ function listarArray($array) {
         $enombre = trim(fgets(STDIN));
         echo "Ingrese la dirección de la empresa: ";
         $edireccion = trim(fgets(STDIN));
-        $empresa->cargar(null, $enombre, $edireccion);
+        $empresa->cargar($enombre, $edireccion);
         if ($empresa->insertar()) {
             echo "Empresa creada con éxito.\n";
         } else {
@@ -277,6 +277,7 @@ function listarArray($array) {
             }
         } else {
             echo "Responsable no encontrado.\n";
+        
         }
     }
 
@@ -307,8 +308,7 @@ function listarArray($array) {
         $numEmpleadoResponsable = modificarResponsable();
         echo "Ingrese importe: ";
         $importe = trim(fgets(STDIN));
-
-        $viaje->cargar(null, $destino, $cantMaxPasajeros, $numEmpleadoResponsable, $importe);
+        $viaje->cargar($destino, $cantMaxPasajeros, $empresa, $numEmpleadoResponsable, $importe);
         if ($viaje->insertar()) {
             echo "Viaje creado con éxito.";
         } else {
