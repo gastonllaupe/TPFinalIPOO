@@ -303,7 +303,15 @@ function opcionesModificarEmpresa($empresa)
     // Funciones CRUD para Viaje
     function crearViaje() {
         $viaje = new Viaje();
-        $viaje->cargar(null, $destino, $cantMaxPasajeros, $idEmpresa, $numEmpleadoResponsable);
+        echo "Ingrese el Destino: ";
+        $destino = trim(fgets(STDIN));
+        echo "Cantidad máxima de pasajeros: ";
+        $cantMaxPasajeros = trim(fgets(STDIN));
+        $numEmpleadoResponsable = modificarResponsable();
+        echo "Ingrese importe: ";
+        $importe = trim(fgets(STDIN));
+
+        $viaje->cargar(null, $destino, $cantMaxPasajeros, $numEmpleadoResponsable, $importe);
         if ($viaje->insertar()) {
             echo "Viaje creado con éxito.";
         } else {
