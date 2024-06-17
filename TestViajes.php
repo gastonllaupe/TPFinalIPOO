@@ -304,20 +304,28 @@ function listarArray($array) {
         $destino = trim(fgets(STDIN));
         echo "Cantidad máxima de pasajeros: ";
         $cantMaxPasajeros = trim(fgets(STDIN));
-        
+        echo "ID de la empresa: ";
+        $idEmpresa = trim(fgets(STDIN));
+        $empresa = new Empresa();
+        $existeEmpresa = $empresa->buscar($idEmpresa);
+        if (!$existeEmpresa) {
+            echo "\nEl id de la empresa no existe.\n";
+        } else {
+            $objEmpresa = crearEmpresa();
+        }
         echo "Numero empleado responsable: ";
         $numresponsable = trim(fgets(STDIN));
         $responsable = new ResponsableV();
         $existe = $responsable->buscar($numresponsable);
         if (!$existe) {
             echo "El numero de empleado no existe.\n";
+        } else {
+            $objResponsable = ingresarResponsable();
         }
-
-
         echo "Ingrese importe: ";
         $importe = trim(fgets(STDIN));
 
-        $viaje->cargar($destino, $cantMaxPasajeros, $objEmpresa, $responsable, $importe);
+        $viaje->cargar($destino, $cantMaxPasajeros, $objEmpresa, $objResponsable, $importe);
         if ($viaje->insertar()) {
             echo "Viaje creado con éxito.";
         } else {
