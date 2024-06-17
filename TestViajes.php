@@ -25,7 +25,8 @@ function menuEmpresa() {
     echo "1) Crear Empresa\n";
     echo "2) Modificar Empresa\n";
     echo "3) Eliminar Empresa\n";
-    echo "4) Volver al Menú Principal\n";
+    echo "4) Listar Empresa\n";
+    echo "5) Volver al Menú Principal\n";
     echo "------------------------\n";
     echo "Seleccione una opción: ";
 }
@@ -79,6 +80,52 @@ function menuResponsable() {
             echo "Empresa creada con éxito.\n";
         } else {
             echo "Error al crear empresa: " . $empresa->getMensaje() . "\n";
+        }
+    }
+    
+    function modificarEmpresa() {
+        $empresa = new Empresa();
+        echo "Ingrese id de la Empresa: ";
+        $idEm = trim(fgets(STDIN));
+    
+        if ($empresa->buscar($idEm)) {
+            echo "Ingrese el nuevo nombre: ";
+            $enombre = trim(fgets(STDIN));
+            echo "Ingrese la nueva direccion: ";
+            $edireccion = trim(fgets(STDIN));
+            $empresa->cargar($idEm, $enombre, $edireccion);
+    
+            if ($empresa->modificar()) {
+                echo "Empresa modificada con éxito\n";
+            } else {
+                echo "Error al crear empresa: " .$empresa->getMensaje() ."\n";
+            }
+        } else {
+            echo "Empresa no encontrada\n";
+        }
+    }
+    
+    function eliminarEmpresa() {
+        $empresa = new Empresa();
+        echo "Ingrese el id de la empresa a eliminar: ";
+        $idEm = trim(fgets(STDIN));
+        
+        if($empresa->buscar($idEm)) {
+            if ($empresa->eliminar()) {
+                echo "Empresa eliminada con éxito.\n";
+            } else {
+                echo "Error al eliminar empresa: " .$empresa->getMensaje(). "\n"; 
+            }
+        } else {
+            echo "Empresa no encontrada.\n";
+        }
+    }
+
+    function listarEmpresa() {
+        $empresa = new Empresa();
+        $empresas = $empresa->listar();
+        foreach ($empresas as $emp) {
+            echo $emp;
         }
     }
 
@@ -253,14 +300,6 @@ function menuResponsable() {
     }
 
 
-    // Funcion que imprime la empresa en cadena
-    function verEmpresa() {
-        $empresa = new Empresa();
-        $empresas = $empresa->listar();
-        foreach ($empresas as $emp) {
-            echo $emp;
-        }
-    }
 
     // Funcion que imprime los detalles del viaje en cadena
     function mostrarDetallesViaje() {
@@ -295,13 +334,16 @@ function gestionEmpresas() {
                 break;
             
             case 4:
+                listarEmpresa();
+                break;
+            case 5:
                 echo "Volviendo al Menú Principal\n";
                 break;
 
             default:
                 echo "Opción inválida. Por favor, itnente de nuevo\n";
         }
-    } while ($opcionEmpresa != 4);
+    } while ($opcionEmpresa != 5);
 } 
 
 function gestionViajes() {
