@@ -265,12 +265,12 @@ function listarArray($array) {
         $nrodoc = trim(fgets(STDIN));
         if ($responsable->buscar($nrodoc)) {
             if ($responsable->eliminar()) {
-                echo "Viaje eliminado con éxito.";
+                echo "Responsable eliminado con éxito.";
             } else {
-                echo "Error al eliminar viaje: " . $responsable->getmensajeoperacion();
+                echo "Error al eliminar Responsable: " . $responsable->getmensajeoperacion();
             }
         } else {
-            echo "Viaje no encontrado.";
+            echo "Responsable no encontrado.";
         }
     }
 
@@ -301,9 +301,11 @@ function listarArray($array) {
         } 
     }
 
-    function eliminarViaje($id) {
+    function eliminarViaje() {
         $viaje = new Viaje();
-        if ($viaje->buscar($id)) {
+        echo "Ingrese el número de id del viaje a eliminar: ";
+        $idviaje = trim(fgets(STDIN));
+        if ($viaje->buscar($idviaje)) {
             if ($viaje->eliminar()) {
                 echo "Viaje eliminado con éxito.";
             } else {
@@ -314,26 +316,11 @@ function listarArray($array) {
         }
     }
 
-    // Funcion que imprime los viajes
-    function verViajes() {
+
+    function listarViajes() {
         $viaje = new Viaje();
         $viajes = $viaje->listar();
-        $resultado = "";
-        foreach ($viajes as $via) {
-            $resultado .= $via . "\n";
-        }
-        return $resultado;
-    }
-
-
-
-    // Funcion que imprime los detalles del viaje en cadena
-    function mostrarDetallesViaje() {
-        $viaje = new Viaje();
-        $viajes = $viaje->listar();
-        foreach ($viajes as $via) {
-            echo $via;
-        }   
+        listarArray($viajes);
     }
 
 
@@ -392,7 +379,7 @@ function gestionViajes() {
                 break;
 
             case 4:
-                mostrarDetallesViaje();
+                listarViajes();
                 break;
 
             case 5:
