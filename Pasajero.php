@@ -3,19 +3,17 @@ include_once "BaseDatos.php";
 
 class Pasajero extends Persona{
     private $telefono;
-    private $numAsiento;
-    private $numTicket;
+    private $idViaje;
     private $mensajeoperacion;
 
 
     public function __construct(){
         parent::__construct();
         $this->telefono = "";
-        $this->numAsiento = "";
-        $this->numTicket = "";
+        $this->idViaje = "";
     }
 
-    public function cargar($NroD,$Nom,$Ape,$telefono=null,$asiento=null,$ticket=null){	
+    public function cargar($NroD,$Nom,$Ape,$telefono=null,$idviaje=null){	
 	    parent::cargar($NroD, $Nom, $Ape);
 	    $this->setTelefono($telefono);
         $this->setAsiento($asiento);
@@ -27,25 +25,19 @@ class Pasajero extends Persona{
         return $this->telefono;
     }
 
-    public function getAsiento(){
-        return $this->numAsiento;
+    public function getIdViaje(){
+        return $this->idViaje;
     }
 
-    public function getTicket(){
-        return $this->numTicket;
-    }
 
     public function setTelefono ($nuevo){
         $this->telefono = $nuevo;
     }
 
-    public function setAsiento($nuevo){
-        $this->numAsiento = $nuevo;
+    public function setIdViaje($nuevo){
+        $this->idViaje = $nuevo;
     }
 
-    public function setTicket($nuevo){
-        $this->numTicket = $nuevo;
-    }
 
     public function getmensajeoperacion(){
 		return $this->mensajeoperacion ;
@@ -74,8 +66,7 @@ class Pasajero extends Persona{
 				if($row2=$base->Registro()){	
 				    parent::Buscar($dni);
 				    $this->setTelefono($row2['ptelefono']);
-                    $this->setAsiento($row2['asiento']);
-                    $this->setTicket($row2['ticket']);
+                    $this->idViaje($row2['idviaje']);
 					$resp= true;
 				}				
 			
@@ -118,7 +109,7 @@ class Pasajero extends Persona{
 	public function modificar(){
         $rta = false;
         $base = new BaseDatos();
-        $consulta = "UPDATE pasajero SET ptelefono = {$this->getTelefono()}, pnombre = '{$this->getNombre()}', papellido = '{$this->getApellido()}', numasiento = '{$this->getAsiento()}', numticket = '{$this->getTicket()}' WHERE pdocumento = {$this->getNrodoc()}";
+        $consulta = "UPDATE pasajero SET ptelefono = {$this->getTelefono()}, pnombre = '{$this->getNombre()}', papellido = '{$this->getApellido()}', idviaje = '{$this->getIdViaje()}' WHERE pdocumento = {$this->getNrodoc()}";
         if($base->Iniciar()){
             if($base->Ejecutar($consulta)){
                 $rta = true;
@@ -136,8 +127,8 @@ class Pasajero extends Persona{
 		$resp= false;
 		
 		if(parent::insertar()){
-		    $consultaInsertar="INSERT INTO pasajero(pdocumento, ptelefono, numAsiento, numTicket)
-				VALUES (".$this->getNrodoc().",'".$this->getTelefono()."','".$this->getAsiento()."','".$this->getTicket()."')";
+		    $consultaInsertar="INSERT INTO pasajero(pdocumento, ptelefono, idviaje)
+				VALUES (".$this->getNrodoc().",'".$this->getTelefono()."','".$this->getIdViaje()."')";
 		    if($base->Iniciar()){
 		        if($base->Ejecutar($consultaInsertar)){
 		            $resp=  true;
@@ -155,8 +146,7 @@ class Pasajero extends Persona{
     public function __toString(){
         $cadena = parent::__toString();
         $cadena .= "Numero de telefono: " . $this->getTelefono() . "\n";
-        $cadena .= "Numero de asiento: " . $this->getAsiento() . "\n";
-        $cadena .= "Numero de ticket: " . $this->getTicket() . "\n";
+        $cadena .= "ID de viaje: " . $this->getIdViaje() . "\n";
         return $cadena;
     }
 }
