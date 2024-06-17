@@ -67,6 +67,14 @@ function menuResponsable() {
     echo "Seleccione una opción: ";
 }
 
+// Funcion para listar un arreglo
+function listarArray($array) {
+    $texto = "\n-------------------\n";
+    foreach ($array as $item) {
+        $texto = $texto . $item->__toString() . "\n";
+    }
+    echo $texto;
+}
 
 // Funciones CRUD para la empresa
     function crearEmpresa() {
@@ -187,6 +195,23 @@ function menuResponsable() {
             }
         } else {
             echo "Pasajero no encontrado.\n";
+        }
+    }
+
+    // Verifica que existan pasajeros en el viaje
+    function ExistenPasajeros() {
+        $pasajero = new Pasajero();
+        $pasajeros = $pasajero->listar();
+        $hayPasajerosCargados = sizeof($pasajeros) > 0;
+        return $hayPasajerosCargados;
+    }
+
+    function listarPasajero() {
+        if (existenPasajeros()) {
+            $pasajeros = $pasajero->listar();
+            listarArray($pasajeros);
+        } else {
+            echo "No hay pasajeros cargados.\n";
         }
     }
 
