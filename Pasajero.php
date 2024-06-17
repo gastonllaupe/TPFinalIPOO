@@ -16,8 +16,6 @@ class Pasajero extends Persona{
     public function cargar($NroD,$Nom,$Ape,$telefono=null,$idviaje=null){	
 	    parent::cargar($NroD, $Nom, $Ape);
 	    $this->setTelefono($telefono);
-        $this->setAsiento($asiento);
-        $this->setTicket($ticket);
     }
 
 
