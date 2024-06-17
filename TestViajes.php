@@ -310,8 +310,7 @@ function listarArray($array) {
         $empresa = new Empresa();
         $existeEmpresa = $empresa->buscar($idEmpresa);
         if (!$existeEmpresa) {
-            echo "\nEl id de la empresa no existe.\n";
-        } else {
+            echo "\nNo se encontro ninguna empresa. Ingresar una nueva.\n";
             $objEmpresa = crearEmpresa();
         }
         echo "Numero empleado responsable: ";
@@ -319,8 +318,7 @@ function listarArray($array) {
         $responsable = new ResponsableV();
         $existe = $responsable->buscar($numresponsable);
         if (!$existe) {
-            echo "El numero de empleado no existe.\n";
-        } else {
+            echo "El numero de empleado no existe. Ingrese un responsable\n";
             $objResponsable = ingresarResponsable();
         }
         echo "Ingrese importe: ";

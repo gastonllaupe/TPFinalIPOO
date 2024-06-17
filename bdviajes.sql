@@ -17,6 +17,8 @@ CREATE TABLE empresa(
 CREATE TABLE responsable (
     rnumeroempleado bigint AUTO_INCREMENT,
     rnumerolicencia bigint,
+    rnombre varchar (150),
+    rapellido varchar (150),
     PRIMARY KEY (rnumeroempleado)
     )ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 	
