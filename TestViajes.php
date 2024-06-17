@@ -208,6 +208,7 @@ function listarArray($array) {
 
     function listarPasajero() {
         if (existenPasajeros()) {
+            $pasajero = new Pasajero();
             $pasajeros = $pasajero->listar();
             listarArray($pasajeros);
         } else {
