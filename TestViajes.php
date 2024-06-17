@@ -287,18 +287,13 @@ function listarArray($array) {
         } 
     }
 
-    function modificarViaje($id, $destino, $cantMaxPasajeros, $idEmpresa, $numEmpleadoResponsable) {
-        $viaje = new Viaje();
-        if ($viaje->buscar($id)) {
-            $viaje->cargar($id, $destino, $cantMaxPasajeros, $idEmpresa, $numEmpleadoResponsable);
-            if ($viaje->modificar()) {
-                echo "Viaje modificado con éxito.";
-            } else {
-                echo "Error al modificar viaje: " . $viaje->getMensaje();
-            }
+    function modificarViaje($viaje) {
+        if ($viaje->modificar()) {
+            echo "Se modificó el viaje.\n";
         } else {
-            echo "Viaje no encontrado.";
-        } 
+            echo "No se modificó el viaje.\n";
+            echo $viaje->getMensaje();
+        };
     }
 
     function eliminarViaje() {
@@ -322,6 +317,92 @@ function listarArray($array) {
         $viajes = $viaje->listar();
         listarArray($viajes);
     }
+
+    // Funciones para las modificaciones del viaje
+
+    // Funcion que retorna un boolean segun si hay viajes cargados
+    function existenViajes() {
+        $viaje = new Viaje();
+        $viajes = $viaje->listar();
+        $hayViajesCargados = sizeof($viajes) > 0;
+        return $hayViajesCargados;
+    }
+
+
+    // Funcion que recibe un idViaje y retorna la lista de los pasajeros del mismo
+    function listadoPasajerosEnViaje($idViaje) {
+        $pasajero = new Pasajero();
+        $condicion = 'idviaje = ' . $idViaje;
+        $pasajeros = $pasajero->listar($condicion);
+        return $pasajeros;
+    }
+
+    // funcion que muestra las opciones para modificar el viaje
+    function opcionesModificarViaje($viaje)
+{
+    do {
+
+        echo "\n----------MODIFICACIONES VIAJES----------
+        1) Destino.
+        2) Cantidad maxima de pasajeros. 
+        3) Empresa.
+        4) Responsable.
+        5) Importe. 
+        0) Volver atras.
+        Opcion: ";
+        $opcion = trim(fgets(STDIN));
+        switch ($opcion) {
+            case 1:
+                echo "Ingrese el nuevo destino: ";
+                $nuevo = trim(fgets(STDIN));
+                $viaje->setVdestino($nuevo);
+                modificarViaje($viaje);
+                break;
+            case 2:
+                echo "Ingrese la nueva cantidad de pasajeros: ";
+                $nuevo = trim(fgets(STDIN));
+                if (sizeof(listadoPasajerosEnViaje($viaje->getIdViaje())) > $nuevo) {
+                    echo "El viaje supera la cantidad de pasajeros, no se realizo la modificacion.\n";
+                } else {
+                    $viaje->setVcantmaxpasajeros($nuevo);
+                    modificarViaje($viaje);
+                }
+                break;
+            case 3:
+                echo "Ingrese el ID de la nueva empresa: ";
+                $nuevo = trim(fgets(STDIN));
+                $nuevaEmpresa = new Empresa();
+                if ($nuevaEmpresa->buscar($nuevo)) {
+                    $viaje->setObjempresa($nuevaEmpresa);
+                    modificarViaje($viaje);
+                } else {
+                    echo "No se encontro una empresa con el ID buscado.\n";
+                }
+                break;
+            case 4:
+                echo "Ingrese el Num. Empleado del nuevo responsable: ";
+                $nuevo = trim(fgets(STDIN));
+                $nuevoResponsable = new ResponsableV();
+                if ($nuevoResponsable->buscar($nuevo)) {
+                    $viaje->setRnumeroempleado($nuevoResponsable);
+                    modificarViaje($viaje);
+                } else {
+                    echo "No se encontro un responsbale con el Num. Empleado buscado.\n";
+                }
+                break;
+            case 5:
+                echo "Ingrese el nuevo importe: ";
+                $nuevo = trim(fgets(STDIN));
+                $viaje->setVimporte($nuevo);
+                modificarViaje($viaje);
+                break;
+            case 0:
+                break;
+            default:
+                echo "Opcion incorrecta.\n";
+        }
+    } while ($opcion != 0);
+}
 
 
 // Funciones correspondientes a las opciones del Menú Principal
@@ -371,7 +452,18 @@ function gestionViajes() {
                 break;
 
             case 2:
-                modificarViaje();
+                $viaje = new Viaje();
+                if (existenViajes()) {
+                    echo "Ingrese el ID del viaje a modificar: ";
+                    $id = trim(fgets(STDIN));
+                    if ($viaje->buscar($id)) {
+                        opcionesModificarViaje($viaje);
+                    } else {
+                        echo "No se encontro el viaje con el ID solicitado.\n";
+                    }
+                } else {
+                    echo "Opcion no disponible. Inserte un viaje para continuar.\n";
+                }
                 break;
 
             case 3:
