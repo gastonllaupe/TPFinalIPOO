@@ -299,38 +299,57 @@ function listarArray($array) {
 
 
     // Funciones CRUD para Viaje
-    function crearViaje() {
-        $viaje = new Viaje();
-        echo "Ingrese el Destino: ";
-        $destino = trim(fgets(STDIN));
-        echo "Cantidad máxima de pasajeros: ";
-        $cantMaxPasajeros = trim(fgets(STDIN));
+    function crearViaje()
+{
+    $viaje = new Viaje();
+    echo "Ingrese los datos del viaje:\n";
+    
+    // Solicitar destino
+    echo "Destino: ";
+    $destino = trim(fgets(STDIN));
+
+    // Solicitar cantidad máxima de pasajeros
+    echo "Cantidad máxima de pasajeros: ";
+    $cantMax = trim(fgets(STDIN));
+    
+    // Validar existencia de la empresa por ID
+    do {
         echo "ID de la empresa: ";
         $idEmpresa = trim(fgets(STDIN));
         $empresa = new Empresa();
-        $existeEmpresa = $empresa->buscar($idEmpresa);
-        if (!$existeEmpresa) {
-            echo "\nNo se encontro ninguna empresa. Ingresar una nueva.\n";
-            $objEmpresa = crearEmpresa();
+        $existe = $empresa->buscar($idEmpresa);
+        if (!$existe) {
+            echo "El ID ingresado no existe.\n";
         }
-        echo "Numero empleado responsable: ";
+    } while (!$existe);
+    
+    // Validar existencia del empleado responsable por número de empleado
+    do {
+        echo "Número de empleado responsable: ";
         $numresponsable = trim(fgets(STDIN));
         $responsable = new ResponsableV();
         $existe = $responsable->buscar($numresponsable);
         if (!$existe) {
-            echo "El numero de empleado no existe. Ingrese un responsable\n";
-            $objResponsable = ingresarResponsable();
+            echo "El número de empleado no existe.\n";
         }
-        echo "Ingrese importe: ";
-        $importe = trim(fgets(STDIN));
-
-        $viaje->cargar($destino, $cantMaxPasajeros, $objEmpresa, $objResponsable, $importe);
-        if ($viaje->insertar()) {
-            echo "Viaje creado con éxito.";
-        } else {
-            echo "Error al crear viaje: " . $viaje->getMensaje();
-        }
+    } while (!$existe);
+    
+    // Solicitar importe
+    echo "Importe: ";
+    $importe = trim(fgets(STDIN));
+    
+    // Cargar datos en el objeto Viaje
+    $viaje->cargar($destino, $cantMax, $empresa, $responsable, $importe);
+    
+    // Insertar viaje y verificar éxito
+    if ($viaje->insertar()) {
+        echo "Se insertó el viaje.\n";
+    } else {
+        echo $viaje->getMensaje();
     }
+    
+    return $viaje;
+}
 
     function modificarViaje($viaje) {
         if ($viaje->modificar()) {
