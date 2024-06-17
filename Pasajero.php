@@ -16,8 +16,6 @@ class Pasajero extends Persona{
     public function cargar($NroD,$Nom,$Ape,$telefono=null,$idviaje=null){	
 	    parent::cargar($NroD, $Nom, $Ape);
 	    $this->setTelefono($telefono);
-        $this->setAsiento($asiento);
-        $this->setTicket($ticket);
     }
 
 
@@ -66,7 +64,7 @@ class Pasajero extends Persona{
 				if($row2=$base->Registro()){	
 				    parent::Buscar($dni);
 				    $this->setTelefono($row2['ptelefono']);
-                    $this->idViaje($row2['idviaje']);
+                    $this->setIdViaje($row2['idviaje']);
 					$resp= true;
 				}				
 			
