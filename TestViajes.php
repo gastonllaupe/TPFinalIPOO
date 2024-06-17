@@ -38,8 +38,7 @@ function menuViaje() {
     echo "2) Modificar Viaje\n";
     echo "3) Eliminar Viaje\n";
     echo "4) Listar Viaje\n";
-    echo "5) Ver Detalles de un Viaje\n";
-    echo "6) Volver al Menú Principal\n";
+    echo "5) Volver al Menú Principal\n";
     echo "------------------------\n";
     echo "Seleccione una opción: ";
 }
