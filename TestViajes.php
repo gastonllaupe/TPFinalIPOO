@@ -172,7 +172,18 @@ function listarArray($array) {
         $apellido = trim(fgets(STDIN));
         echo "Ingrese el teléfono: ";
         $telefono = trim(fgets(STDIN));
-        $pasajero->cargar($nrodoc, $nombre, $apellido, $telefono);
+
+        do {
+            echo "ID del viaje: ";
+            $idViaje = trim(fgets(STDIN));
+            $viaje = new Viaje();
+            $existe = $viaje->buscar($idViaje);
+            if (!$existe) {
+                echo "El ID ingresado no existe.\n";
+            }
+        } while (!$existe);
+
+        $pasajero->cargar($nrodoc, $nombre, $apellido, $telefono, $viaje);
         if ($pasajero->insertar()) {
             echo "Pasajero ingresado con éxito.\n";
         } else {
@@ -299,8 +310,7 @@ function listarArray($array) {
 
 
     // Funciones CRUD para Viaje
-    function crearViaje()
-{
+    function crearViaje() {
     $viaje = new Viaje();
     echo "Ingrese los datos del viaje:\n";
     
@@ -315,9 +325,9 @@ function listarArray($array) {
     // Validar existencia de la empresa por ID
     do {
         echo "ID de la empresa: ";
-        $idEmpresa = trim(fgets(STDIN));
+        $idViaje = trim(fgets(STDIN));
         $empresa = new Empresa();
-        $existe = $empresa->buscar($idEmpresa);
+        $existe = $empresa->buscar($idViaje);
         if (!$existe) {
             echo "El ID ingresado no existe.\n";
         }

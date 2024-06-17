@@ -13,9 +13,10 @@ class Pasajero extends Persona{
         $this->idViaje = "";
     }
 
-    public function cargar($NroD,$Nom,$Ape,$telefono=null,$idviaje=null){	
+    public function cargar($NroD,$Nom,$Ape,$telefono=null,$idViaje=null){	
 	    parent::cargar($NroD, $Nom, $Ape);
 	    $this->setTelefono($telefono);
+		$this->setIdViaje($idViaje);
     }
 
 

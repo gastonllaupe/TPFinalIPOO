@@ -175,7 +175,7 @@ class Viaje
         $empresa = $this->getObjempresa();
         $idEmpresa = $empresa->getIdEmpresa();
         $responsable = $this->getRnumeroempleado();
-        $numResponsable = $responsable->getRnumeroempleado();
+        $numResponsable = $responsable->getNumero();
         $consulta = "INSERT INTO viaje(vdestino, vcantmaxpasajeros, idempresa, rnumeroempleado, vimporte) 
         VALUES ('{$this->getVdestino()}', {$this->getVcantmaxpasajeros()}, 
         {$idEmpresa}, {$numResponsable}, {$this->getVimporte()})";
@@ -198,7 +198,7 @@ class Viaje
         $empresa = $this->getObjempresa();
         $idEmpresa = $empresa->getIdempresa();
         $responsable = $this->getRnumeroempleado();
-        $numResponsable = $responsable->getRnumeroempleado();
+        $numResponsable = $responsable->getNumero();
         $consulta = "UPDATE viaje SET vdestino = '{$this->getVdestino()}', vcantmaxpasajeros = {$this->getVcantmaxpasajeros()}, idempresa = {$idEmpresa}, rnumeroempleado = {$numResponsable}, vimporte = {$this->getVimporte()} WHERE idviaje = {$this->getIdviaje()}";
         if ($base->Iniciar()) {
             if ($base->Ejecutar($consulta)) {
