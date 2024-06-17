@@ -172,9 +172,7 @@ function listarArray($array) {
         $apellido = trim(fgets(STDIN));
         echo "Ingrese el teléfono: ";
         $telefono = trim(fgets(STDIN));
-        echo "Ingrese el ID del viaje: ";
-        $idviaje = trim(fgets(STDIN));
-        $pasajero->cargar($nrodoc, $nombre, $apellido, $telefono, $idviaje);
+        $pasajero->cargar($nrodoc, $nombre, $apellido, $telefono);
         if ($pasajero->insertar()) {
             echo "Pasajero ingresado con éxito.\n";
         } else {
