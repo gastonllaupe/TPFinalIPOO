@@ -90,26 +90,13 @@ function listarArray($array) {
             echo "Error al crear empresa: " . $empresa->getMensaje() . "\n";
         }
     }
-    
-    function modificarEmpresa() {
-        $empresa = new Empresa();
-        echo "Ingrese id de la Empresa: ";
-        $idEm = trim(fgets(STDIN));
-    
-        if ($empresa->buscar($idEm)) {
-            echo "Ingrese el nuevo nombre: ";
-            $enombre = trim(fgets(STDIN));
-            echo "Ingrese la nueva direccion: ";
-            $edireccion = trim(fgets(STDIN));
-            $empresa->cargar($idEm, $enombre, $edireccion);
-    
-            if ($empresa->modificar()) {
-                echo "Empresa modificada con éxito\n";
-            } else {
-                echo "Error al crear empresa: " .$empresa->getMensaje() ."\n";
-            }
+
+    function modificarEmpresa($empresa) {
+        if ($empresa->modificar()) {
+            echo "Se realizo la modificacion con exito.\n";
         } else {
-            echo "Empresa no encontrada\n";
+            echo "No se pudo realizar la modificacion.\n";
+            $empresa->getMensaje();
         }
     }
     
@@ -135,6 +122,43 @@ function listarArray($array) {
         foreach ($empresas as $emp) {
             echo $emp;
         }
+    }
+
+    // Funciones para modificar empresa
+
+    function existenEmpresas() {
+        $empresa = new Empresa();
+        $empresas = $empresa->listar();
+        $hayEmpresasCargadas = sizeof($empresas) > 0;
+        return $hayEmpresasCargadas;
+    }
+
+    // Funcion que muestra las opciones de modificar la empresa
+function opcionesModificarEmpresa($empresa)
+{
+    do {
+        echo "\n>>>>>>>>>>>>>>>>>>>>MODIFICACIONES EMPRESA<<<<<<<<<<<<<<<<<<<<
+        1) Nombre.
+        2) Direccion. 
+        0) Volver atras. \n";
+        $opcion = trim(fgets(STDIN));
+        switch ($opcion) {
+            case 1:
+                echo "Ingrese el nuevo nombre: ";
+                $nuevo = trim(fgets(STDIN));
+                $empresa->setEnombre($nuevo);
+                modificarEmpresa($empresa);
+            break;
+            case 2:
+                echo "Ingrese la nueva direccion: ";
+                $nuevo = trim(fgets(STDIN));
+                $empresa->setEdireccion($nuevo);
+                modificarEmpresa($empresa);
+            break;
+            default:
+                "Opcion incorrecta.\n";
+            }
+        } while ($opcion != 0);
     }
 
 
@@ -420,7 +444,18 @@ function gestionEmpresas() {
                 break;
 
             case 2:
-                modificarEmpresa();
+                $empresa = new Empresa();
+                if (existenEmpresas()) {
+                    echo "Ingrese el ID de la empresa a modificar: ";
+                    $id = trim(fgets(STDIN));
+                    if ($empresa->buscar($id)) {
+                        opcionesModificarEmpresa($empresa);
+                    } else {
+                        echo "No existe empresa con el ID ingresado.\n";
+                    }
+                } else {
+                    echo "Opcion no disponible. Ingrese una empresa para continuar.\n";
+                }
                 break;
 
             case 3:
