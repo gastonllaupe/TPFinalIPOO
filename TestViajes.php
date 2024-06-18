@@ -182,6 +182,8 @@ function listarArray($array) {
             }
         } while (!$existe);
 
+        $idViaje = $viaje->getIdviaje();
+
         $pasajero->cargar($nrodoc, $nombre, $apellido, $telefono, $idViaje);
         if ($pasajero->insertar()) {
             echo "Pasajero ingresado con éxito.\n";
