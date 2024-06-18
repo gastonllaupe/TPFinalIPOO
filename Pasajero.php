@@ -10,10 +10,9 @@ class Pasajero extends Persona{
     public function __construct(){
         parent::__construct();
         $this->telefono = "";
-        $this->idViaje = "";
     }
 
-    public function cargar($NroD,$Nom,$Ape,$telefono=null,$idViaje=null){	
+    public function cargar($NroD,$Nom,$Ape,$telefono=null,$idViaje=null){
 	    parent::cargar($NroD, $Nom, $Ape);
 	    $this->setTelefono($telefono);
 		$this->setIdViaje($idViaje);
@@ -51,7 +50,7 @@ class Pasajero extends Persona{
         return $porcentaje;
     }
 
-    		/**
+    /**
 	 * Recupera los datos de una persona por dni
 	 * @param int $dni
 	 * @return true en caso de encontrar los datos, false en caso contrario 
