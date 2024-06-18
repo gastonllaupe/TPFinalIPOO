@@ -26,7 +26,7 @@ CREATE TABLE viaje (
     vcantmaxpasajeros int,
 	idempresa bigint,
     rnumeroempleado bigint,
-    vimporte float,
+    vimporte int, /* estaba en float, lo cambie para que no salte error, preguntar despues*/
     PRIMARY KEY (idviaje),
     FOREIGN KEY (idempresa) REFERENCES empresa (idempresa),
 	FOREIGN KEY (rnumeroempleado) REFERENCES responsable (rnumeroempleado)
