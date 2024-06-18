@@ -61,7 +61,7 @@ function menuResponsable() {
     echo "1) Ingresar Responsable\n";
     echo "2) Modificar Responsable\n";
     echo "3) Eliminar Responsable\n";
-    echo "5) Volver al Menú Principal\n";
+    echo "4) Volver al Menú Principal\n";
     echo "------------------------\n";
     echo "Seleccione una opción: ";
 }
@@ -250,15 +250,15 @@ function listarArray($array) {
     // Funciones CRUD para Responsable
     function ingresarResponsable() {
         $responsable = new ResponsableV();
-        echo "Ingrese el número de empleado: ";
-        $numEmpleado = trim(fgets(STDIN));
-        echo "Ingrese el número de licencia: ";
-        $numLicencia = trim(fgets(STDIN));
+        echo "Ingrese el número de documento: ";
+        $nroDoc = trim(fgets(STDIN));
         echo "Ingrese el nombre: ";
         $nombre = trim(fgets(STDIN));
         echo "Ingrese el apellido: ";
         $apellido = trim(fgets(STDIN));
-        $responsable->cargar($numEmpleado, $numLicencia, $nombre, $apellido);
+        echo "Ingrese el número de licencia: ";
+        $numLicencia = trim(fgets(STDIN));
+        $responsable->cargar($nroDoc, $nombre, $apellido, null, $numLicencia);
         if ($responsable->insertar()) {
             echo "Responsable ingresado con éxito.\n";
         } else {
@@ -293,9 +293,9 @@ function listarArray($array) {
 
     function eliminarResponsable() {
         $responsable = new ResponsableV();
-        echo "Ingrese el número de documento del responsable a eliminar: ";
-        $nrodoc = trim(fgets(STDIN));
-        if ($responsable->buscar($nrodoc)) {
+        echo "Ingrese el número de empleado del responsable a eliminar: ";
+        $idEmpleado = trim(fgets(STDIN));
+        if ($responsable->buscar($idEmpleado)) {
             if ($responsable->eliminar()) {
                 echo "Responsable eliminado con éxito.";
             } else {
@@ -340,6 +340,9 @@ function listarArray($array) {
         $existe = $responsable->buscar($numresponsable);
         if (!$existe) {
             echo "El número de empleado no existe.\n";
+            echo "Ingresar nuevo responsable\n";
+            ingresarResponsable();
+            $existe = $empresa->buscar($idViaje);
         }
     } while (!$existe);
     

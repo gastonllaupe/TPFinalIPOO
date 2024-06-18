@@ -10,9 +10,8 @@ class ResponsableV extends Persona{
     public function __construct(){
 	    parent::__construct();
         $this->rnumeroEmpleado = "";
-        $this->rnumeroLicencia = "";
-
     }
+
 
     public function getNumero (){
         return $this->rnumeroEmpleado;
@@ -54,27 +53,31 @@ class ResponsableV extends Persona{
 
 
     //funciones bd
-    public function buscar($id){
-        $base = new BaseDatos();
-        $consulta = "SELECT * FROM responsable WHERE rnumeroempleado= " . $id;
-        $rta = false;
-        if($base->Iniciar()){
-            if($base->Ejecutar($consulta)){
-                if($row2 = $base->Registro()){
-                    $this->setNumero($row2['rnumeroempleado']);
-                    $this->setLicencia($row2['rnumerolicencia']);
-                    $this->setNombre($row2['rnombre']);
-                    $this->setApellido($row2['rapellido']);
-                    $rta = true;
+    public function Buscar($id){
+        
+        if (parent::Buscar($id)) {
+            $base = new BaseDatos();
+            $consulta = "SELECT * FROM responsable WHERE rnumeroempleado= " . $id;
+            $rta = false;
+            if($base->Iniciar()){
+                if($base->Ejecutar($consulta)){
+                    if($row2 = $base->Registro()){
+                        $this->setNumero($row2['rnumeroempleado']);
+                        $this->setLicencia($row2['rnumerolicencia']);
+
+                        $rta = true;
+                    }
+                }else{
+                    $this->setmensajeoperacion($base->getError());
                 }
             }else{
                 $this->setmensajeoperacion($base->getError());
             }
-        }else{
-            $this->setmensajeoperacion($base->getError());
+            return $rta;
         }
-        return $rta;
+       
     }
+
 
     public function listar($condicion = ''){
         $array = null;
@@ -103,15 +106,20 @@ class ResponsableV extends Persona{
     public function insertar(){
         $base = new BaseDatos();
         $rta = false;
-        $consulta = "INSERT INTO responsable(rnumerolicencia, rnombre, rapellido) VALUES ('{$this->getLicencia()}', '{$this->getNombre()}', '{$this->getApellido()}')";
-        if($base->Iniciar()){
-            if($base->Ejecutar($consulta)){
-                $rta = true;
-            }else{
-                $this->setmensajeoperacion($base->getError());    
+        if(parent::insertar()) {
+
+            $consulta = "INSERT INTO responsable(rnumerolicencia) VALUES ('{$this->getLicencia()}')";
+            if($base->Iniciar()){
+                if($base->Ejecutar($consulta)){
+                    $rta = true;
+                }else{
+                    $this->setmensajeoperacion($base->getError());    
+                }
+            } else {
+                $this->setmensajeoperacion($base->getError());
             }
-        }else{
-            $this->setmensajeoperacion($base->getError());
+        } else {
+            $this->setmensajeoperacion(parent::getmensajeoperacion());
         }
         return $rta;
     }
