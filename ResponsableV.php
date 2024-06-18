@@ -10,6 +10,7 @@ class ResponsableV extends Persona{
     public function __construct(){
 	    parent::__construct();
         $this->rnumeroEmpleado = "";
+        $this->rnumeroLicencia = "";
     }
 
 
@@ -55,7 +56,6 @@ class ResponsableV extends Persona{
     //funciones bd
     public function Buscar($id){
         
-        if (parent::Buscar($id)) {
             $base = new BaseDatos();
             $consulta = "SELECT * FROM responsable WHERE rnumeroempleado= " . $id;
             $rta = false;
@@ -76,7 +76,6 @@ class ResponsableV extends Persona{
             return $rta;
         }
        
-    }
 
 
     public function listar($condicion = ''){
