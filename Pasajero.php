@@ -124,10 +124,10 @@ class Pasajero extends Persona{
     public function insertar(){
 		$base=new BaseDatos();
 		$resp= false;
-		
-		if(parent::insertar()){
-		    $consultaInsertar="INSERT INTO pasajero(pdocumento, ptelefono, idviaje)
-				VALUES (".$this->getNrodoc().",'".$this->getTelefono()."','".$this->getIdViaje()."')";
+			$Objviaje = $this->getIdViaje();
+			$idviaje = $Objviaje->getIdviaje();
+		    $consultaInsertar="INSERT INTO pasajero(pdocumento,pnombre, papellido, ptelefono, idviaje)
+				VALUES( '{$this->getNrodoc()}' , '{$this->getNombre()}' ,'{$this->getApellido()}' , '{$this->getTelefono()}' , '{$idviaje}')";
 		    if($base->Iniciar()){
 		        if($base->Ejecutar($consultaInsertar)){
 		            $resp=  true;
@@ -137,7 +137,7 @@ class Pasajero extends Persona{
 		    } else {
 		        $this->setmensajeoperacion($base->getError());
 		    }
-		 }
+		 
 		return $resp;
 	}
 
