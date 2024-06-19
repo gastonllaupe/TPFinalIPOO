@@ -81,13 +81,14 @@ class ResponsableV extends Persona{
     public function listar($condicion = ''){
         $array = null;
         $base = new BaseDatos();
-        $consulta = "SELECT * FROM responsable";
-        if($condicion != ''){
-            $consulta = $consulta . ' WHERE ' . $condicion;
-        }
-        if($base->Iniciar()){
-            if($base->Ejecutar($consulta)){
-                $array = array();
+        if (parent::listar()) {
+            $consulta = "SELECT * FROM responsable";
+            if($condicion != ''){
+                $consulta = $consulta . ' WHERE ' . $condicion;
+            }
+            if($base->Iniciar()){
+                if($base->Ejecutar($consulta)){
+                    $array = array();
                 while($row2 = $base->Registro()){
                     $responsable = new ResponsableV();
                     $responsable->buscar($row2['rnumeroempleado']);
@@ -100,6 +101,7 @@ class ResponsableV extends Persona{
             ResponsableV::setmensajeoperacion($base->getError());
         }
         return $array;
+        }
     }
 
 ///modifique insertar y modificar para que usen el padre como la clase pasajero
@@ -109,8 +111,8 @@ class ResponsableV extends Persona{
 		$resp = false;
 
 		if (parent::insertar()) {
-			$consultaInsertar = "INSERT INTO responsable (rnumeroempleado, rnumerolicencia)
-							 VALUES (".$this->getNumero ().", ".$this->getLicencia ().")";
+			$consultaInsertar = "INSERT INTO responsable (rnumerolicencia)
+							 VALUES (".$this->getLicencia ().")";
 
 			if ($base->Iniciar()) {
 				if ($base->Ejecutar($consultaInsertar)) {

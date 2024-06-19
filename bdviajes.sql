@@ -15,9 +15,13 @@ CREATE TABLE empresa(
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 CREATE TABLE responsable (
+    rdocumento varchar (15),
+    rnombre varchar (150),
+    rapellido varchar (150),
     rnumeroempleado bigint AUTO_INCREMENT,
     rnumerolicencia bigint,
-    PRIMARY KEY (rnumeroempleado)
+    PRIMARY KEY (rnumeroempleado),
+    FOREIGN KEY (nrodoc) REFERENCES persona (nrodoc)
     )ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 	
 CREATE TABLE viaje (
