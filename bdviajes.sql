@@ -45,5 +45,6 @@ CREATE TABLE pasajero (
 	ptelefono int, 
 	idviaje bigint,
     PRIMARY KEY (pdocumento),
-	FOREIGN KEY (idviaje) REFERENCES viaje (idviaje)	
+	FOREIGN KEY (idviaje) REFERENCES viaje (idviaje) ON UPDATE CASCADE
+    ON DELETE CASCADE	
     )ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -457,12 +457,8 @@ function listarArray($array) {
             case 2:
                 echo "Ingrese la nueva cantidad de pasajeros: ";
                 $nuevo = trim(fgets(STDIN));
-                if (sizeof(listadoPasajerosEnViaje($viaje->getIdViaje())) > $nuevo) {
-                    echo "El viaje supera la cantidad de pasajeros, no se realizo la modificacion.\n";
-                } else {
                     $viaje->setVcantmaxpasajeros($nuevo);
                     modificarViaje($viaje);
-                }
                 break;
             case 3:
                 echo "Ingrese el ID de la nueva empresa: ";
