@@ -20,7 +20,7 @@ class Viaje
         $this->mensaje = '';
     }
 
-    public function cargar($vdestino, $vcantmaxpasajeros, $objempresa, $rnumeroempleado, $vimporte)
+    public function cargar($vdestino, $vcantmaxpasajeros, $objempresa, $rnumeroempleado, $vimporte=null)
     {
         //$this->setIdviaje($idviaje);
         $this->setVdestino($vdestino);

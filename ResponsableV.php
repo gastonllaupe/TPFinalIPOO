@@ -51,7 +51,7 @@ class ResponsableV extends Persona{
     public function Buscar($id){
         
             $base = new BaseDatos();
-            $consulta = "SELECT * FROM responsable WHERE rnumeroempleado= " . $id;
+            $consulta = "Select * from responsable where rnumeroempleado= " . $id;
             $rta = false;
             if($base->Iniciar()){
                 if($base->Ejecutar($consulta)){
