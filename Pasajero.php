@@ -57,7 +57,7 @@ class Pasajero extends Persona{
 	 */		
     public function Buscar($dni){
 		$base=new BaseDatos();
-		$consulta="Select * from pasajero where nrodoc=".$dni;
+		$consulta="Select * from pasajero where pdocumento=".$dni;
 		$resp= false;
 		if($base->Iniciar()){
 		    if($base->Ejecutar($consulta)){
