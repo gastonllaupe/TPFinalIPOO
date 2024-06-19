@@ -102,42 +102,48 @@ class ResponsableV extends Persona{
         return $array;
     }
 
-    public function insertar(){
-        $base = new BaseDatos();
-        $rta = false;
-        if(parent::insertar()) {
+///modifique insertar y modificar para que usen el padre como la clase pasajero
 
-            $consulta = "INSERT INTO responsable(rnumerolicencia) VALUES ('{$this->getLicencia()}')";
-            if($base->Iniciar()){
-                if($base->Ejecutar($consulta)){
-                    $rta = true;
-                }else{
-                    $this->setmensajeoperacion($base->getError());    
-                }
-            } else {
-                $this->setmensajeoperacion($base->getError());
-            }
-        } else {
-            $this->setmensajeoperacion(parent::getmensajeoperacion());
-        }
-        return $rta;
-    }
+    public function insertar() {
+		$base = new BaseDatos();
+		$resp = false;
+
+		if (parent::insertar()) {
+			$consultaInsertar = "INSERT INTO responsable (rnumeroempleado, rnumerolicencia)
+							 VALUES (".$this->getNumero ().", ".$this->getLicencia ().")";
+
+			if ($base->Iniciar()) {
+				if ($base->Ejecutar($consultaInsertar)) {
+					$resp = true;
+				} else {
+					$this->setmensajeoperacion($base->getError());
+				}
+			} else {
+				$this->setmensajeoperacion($base->getError());
+			}
+		}
+		return $resp;
+	}
 
     public function modificar(){
-        $rta = false;
-        $base = new BaseDatos();
-        $consulta = "UPDATE responsable SET rnumerolicencia = {$this->getLicencia()}, rnombre = '{$this->getNombre()}', rapellido = '{$this->getApellido()}' WHERE rnumeroempleado = {$this->getNumero()}";
-        if($base->Iniciar()){
-            if($base->Ejecutar($consulta)){
-                $rta = true;
-            }else{
-                $this->setmensajeoperacion($base->getError());
-            }
-        }else{
-            $this->setmensajeoperacion($base->getError());
-        }
-        return $rta;
-    }
+		$resp =false; 
+		$base=new BaseDatos();
+		if(parent::modificar()){
+			$consultaModifica="UPDATE responsable SET rnumerolicencia='".$this->getLicencia()."' WHERE rnumeroempleado=". $this->getNumero();
+			if($base->Iniciar()){
+				if($base->Ejecutar($consultaModifica)){
+					$resp=  true;
+				}else{
+					$this->setmensajeoperacion($base->getError());
+					
+				}
+			}else{
+				$this->setmensajeoperacion($base->getError());
+				
+			}
+		}
+		return $resp;
+	}
 
     public function eliminar(){
         $base = new BaseDatos();
