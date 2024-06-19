@@ -534,7 +534,7 @@ function gestionEmpresas() {
                 break;
 
             case 3:
-                eliminarEmpresa();
+                eliminarEmpresa(); // agregar checkeos
                 break;
             
             case 4:
@@ -659,7 +659,7 @@ function gestionResponsable() {
             default:
             echo "Opción no válida. Por favor, intente de nuevo.\n"; 
         }
-    } while ($opcionResponsable != 4);
+    } while ($opcionResponsable != 5);
 }
 
 
