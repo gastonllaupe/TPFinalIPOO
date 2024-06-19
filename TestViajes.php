@@ -61,7 +61,7 @@ function menuResponsable() {
     echo "1) Ingresar Responsable\n";
     echo "2) Modificar Responsable\n";
     echo "3) Eliminar Responsable\n";
-    echo "4) Listar Responsable";
+    echo "4) Listar Responsable\n";
     echo "5) Volver al Menú Principal\n";
     echo "------------------------\n";
     echo "Seleccione una opción: ";
