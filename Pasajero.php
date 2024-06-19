@@ -102,41 +102,47 @@ class Pasajero extends Persona{
 		 		$this->setmensajeoperacion($base->getError());
 		 }	
 		 return $arreglo;
-	}	
+	}
 
 	public function modificar(){
-        $rta = false;
-        $base = new BaseDatos();
-        $consulta = "UPDATE pasajero SET ptelefono = {$this->getTelefono()}, pnombre = '{$this->getNombre()}', papellido = '{$this->getApellido()}', idviaje = '{$this->getIdViaje()}' WHERE pdocumento = {$this->getNrodoc()}";
-        if($base->Iniciar()){
-            if($base->Ejecutar($consulta)){
-                $rta = true;
-            }else{
-                $this->setmensajeoperacion($base->getError());
-            }
-        }else{
-            $this->setmensajeoperacion($base->getError());
-        }
-        return $rta;
-    }
-
-    public function insertar(){
+		$resp =false; 
 		$base=new BaseDatos();
-		$resp= false;
-			$Objviaje = $this->getIdViaje();
-			$idviaje = $Objviaje->getIdviaje();
-		    $consultaInsertar="INSERT INTO pasajero(pdocumento,pnombre, papellido, ptelefono, idviaje)
-				VALUES( '{$this->getNrodoc()}' , '{$this->getNombre()}' ,'{$this->getApellido()}' , '{$this->getTelefono()}' , '{$idviaje}')";
-		    if($base->Iniciar()){
-		        if($base->Ejecutar($consultaInsertar)){
-		            $resp=  true;
-		        }	else {
-		            $this->setmensajeoperacion($base->getError());
-		        }
-		    } else {
-		        $this->setmensajeoperacion($base->getError());
-		    }
-		 
+		if(parent::modificar()){
+			$consultaModifica="UPDATE pasajero SET idviaje='".$this->getIdViaje()."', ptelefono='".$this->getTelefono()."' WHERE pdocumento=". $this->getNrodoc();
+			if($base->Iniciar()){
+				if($base->Ejecutar($consultaModifica)){
+					$resp=  true;
+				}else{
+					$this->setmensajeoperacion($base->getError());
+					
+				}
+			}else{
+				$this->setmensajeoperacion($base->getError());
+				
+			}
+		}
+		return $resp;
+	}
+
+
+    public function insertar() {
+		$base = new BaseDatos();
+		$resp = false;
+	
+		if (parent::insertar()) {
+			$consultaInsertar = "INSERT INTO pasajero (pdocumento, ptelefono, idviaje)
+							 VALUES (".$this->getNrodoc().", '".$this->getTelefono()."', ".$this->getIdViaje().")";
+								 
+			if ($base->Iniciar()) {
+				if ($base->Ejecutar($consultaInsertar)) {
+					$resp = true;
+				} else {
+					$this->setmensajeoperacion($base->getError());
+				}
+			} else {
+				$this->setmensajeoperacion($base->getError());
+			}
+		}
 		return $resp;
 	}
 
