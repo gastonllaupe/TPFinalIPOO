@@ -164,8 +164,15 @@ function listarArray($array) {
     // Funciones CRUD para Pasajero
     function ingresarPasajero() {
         $pasajero = new Pasajero();
-        echo "Ingrese el número de documento: ";
-        $nrodoc = trim(fgets(STDIN));
+        do {
+            echo "Ingrese el número de documento: ";
+            $nrodoc = trim(fgets(STDIN));
+            $existe = $pasajero->buscar($nrodoc);
+            if ($existe) {
+                echo "El Documento ingresado ya existe.\n";
+            }
+        } while ($existe);
+
         echo "Ingrese el nombre: ";
         $nombre = trim(fgets(STDIN));
         echo "Ingrese el apellido: ";
