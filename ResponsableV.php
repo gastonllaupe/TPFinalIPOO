@@ -82,11 +82,11 @@ class ResponsableV extends Persona{
     public function listar($condicion = ''){
         $array = null;
         $base = new BaseDatos();
-        $consulta = "SELECT * FROM responsable";
+        $consulta = "Select * from responsable";
         if($condicion != ''){
-            $consulta = $consulta . ' WHERE ' . $condicion;
+            $consulta = $consulta . ' where ' . $condicion;
         }
-        $consulta.=" order by rnumeroempleado";
+        $consulta.=" ORDER BY rnumeroempleado";
         if($base->Iniciar()){
             if($base->Ejecutar($consulta)){
                 $array = array();

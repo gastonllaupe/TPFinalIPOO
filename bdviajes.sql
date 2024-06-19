@@ -21,7 +21,7 @@ CREATE TABLE responsable (
     rnumeroempleado bigint AUTO_INCREMENT,
     rnumerolicencia bigint,
     PRIMARY KEY (rnumeroempleado),
-    FOREIGN KEY (nrodoc) REFERENCES persona (nrodoc)
+    FOREIGN KEY (rdocumento) REFERENCES persona (nrodoc)
     )ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 	
 CREATE TABLE viaje (
