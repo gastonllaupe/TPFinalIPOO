@@ -147,6 +147,27 @@ class Pasajero extends Persona{
 	}
 
 
+	public function eliminar(){
+		$base=new BaseDatos();
+		$resp=false;
+		if($base->Iniciar()){
+				$consultaBorra="DELETE FROM pasajero WHERE nrodoc=".$this->getNrodoc();
+				if($base->Ejecutar($consultaBorra)){
+				    if(parent::eliminar()){
+				        $resp=  true;
+				    }
+				}else{
+						$this->setmensajeoperacion($base->getError());
+					
+				}
+		}else{
+				$this->setmensajeoperacion($base->getError());
+			
+		}
+		return $resp; 
+	}
+
+
     public function __toString(){
         $cadena = parent::__toString();
         $cadena .= "Numero de telefono: " . $this->getTelefono() . "\n";
