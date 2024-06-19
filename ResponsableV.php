@@ -44,13 +44,7 @@ class ResponsableV extends Persona{
         $this->setLicencia($rnumeroLicencia);
     }
 
-    public function __toString(){
-        $cadena = parent::__toString();
-        $cadena .= "Numero de empleado: " . $this->getNumero() . "\n";
-        $cadena .= "Numero de licencia: " . $this->getLicencia() . "\n";
 
-        return $cadena;
-    }
 
 
     //funciones bd
@@ -93,7 +87,7 @@ class ResponsableV extends Persona{
             while($row2 = $base->Registro()){
                 $responsable = new ResponsableV();
                 $responsable->buscar($row2['rnumeroempleado']);
-                $array[] = $responsable;
+                array_push($array,$responsable);
             }
             }else{
                 ResponsableV::setmensajeoperacion($base->getError());
@@ -163,5 +157,11 @@ class ResponsableV extends Persona{
         return $rta;
     }
 
+    public function __toString(){
+        $cadena = parent::__toString();
+        $cadena .= "Numero de empleado: " . $this->getNumero() . "\n";
+        $cadena .= "Numero de licencia: " . $this->getLicencia() . "\n";
 
+        return $cadena;
+    }
 }
