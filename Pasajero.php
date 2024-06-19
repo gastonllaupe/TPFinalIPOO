@@ -151,7 +151,7 @@ class Pasajero extends Persona{
 		$base=new BaseDatos();
 		$resp=false;
 		if($base->Iniciar()){
-				$consultaBorra="DELETE FROM pasajero WHERE nrodoc=".$this->getNrodoc();
+				$consultaBorra="DELETE FROM pasajero WHERE pdocumento=".$this->getNrodoc();
 				if($base->Ejecutar($consultaBorra)){
 				    if(parent::eliminar()){
 				        $resp=  true;
