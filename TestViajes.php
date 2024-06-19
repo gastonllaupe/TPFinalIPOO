@@ -61,7 +61,8 @@ function menuResponsable() {
     echo "1) Ingresar Responsable\n";
     echo "2) Modificar Responsable\n";
     echo "3) Eliminar Responsable\n";
-    echo "4) Volver al Menú Principal\n";
+    echo "4) Listar Responsable";
+    echo "5) Volver al Menú Principal\n";
     echo "------------------------\n";
     echo "Seleccione una opción: ";
 }
@@ -266,6 +267,23 @@ function listarArray($array) {
         } else {
             echo "Error al ingresar responsable: " . $responsable->getmensajeoperacion() . "\n";
         }
+    }
+
+    function listarResponsable(){
+        if (existeResponsable()){
+            $responsable = new ResponsableV();
+            $responsables = $responsable->listar();
+            listarArray($responsables);
+        }else{
+            echo "No hay responsables cargados";
+        }
+    }
+
+    function existeResponsable(){
+        $responsable = new ResponsableV();
+        $responsables = $responsable->listar();
+        $hayResponsable = sizeof($responsables)>0;
+        return $hayResponsable;
     }
     
     function modificarResponsable() {
@@ -630,9 +648,11 @@ function gestionResponsable() {
                 break;
 
             case 4:
+                listarResponsable();
+                break;
+            case 5:
                 echo "Volviendo al Menú Principal\n";
                 break;
-
             default:
             echo "Opción no válida. Por favor, intente de nuevo.\n"; 
         }

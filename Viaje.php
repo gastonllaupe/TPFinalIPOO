@@ -104,12 +104,13 @@ class Viaje
     //toString
     public function __toString()
     {
+        $empleado = $this->getRnumeroempleado();
         return "----------------------------------
             ID: " . $this->getIdviaje() .
             "\nDestino: " . $this->getVdestino() .
             "\nCantidad maxima de pasajeros: " . $this->getVcantMaxPasajeros() .
             "\nEmpresa: \n" . $this->getObjempresa() .
-            "\nEmpleado Responsable: \n" . $this->getRnumeroempleado() .
+            "\nNumero del empleado Responsable: \n" . $empleado->getNumero() .
             "\nImporte: $" . $this->getVimporte() ."\n";
     }
 
