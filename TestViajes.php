@@ -373,18 +373,18 @@ function existeResponsable()
 
 function modificarResponsable()
 {
-    echo "Ingrese el número de empleado del responsable a modificar: ";
-    $numEmpleado = trim(fgets(STDIN));
+    echo "Ingrese el número de documento del responsable a modificar: ";
+    $dnie = trim(fgets(STDIN));
     $responsable = new ResponsableV();
 
-    if ($responsable->buscar($numEmpleado)) {
+    if ($responsable->buscar($dnie)) {
         echo "Ingrese el nuevo número de licencia: ";
         $numLicencia = trim(fgets(STDIN));
         echo "Ingrese el nuevo nombre: ";
         $nombre = trim(fgets(STDIN));
         echo "Ingrese el nuevo apellido: ";
         $apellido = trim(fgets(STDIN));
-        $responsable->cargar($numEmpleado, $numLicencia, $nombre, $apellido);
+        $responsable->cargar($dnie,$nombre, $apellido, $numLicencia);
 
         if ($responsable->modificar()) {
             echo "Responsable modificado con éxito.\n";
@@ -441,12 +441,12 @@ function crearViaje()
 
     // Validar existencia del empleado responsable por número de empleado
     do {
-        echo "Número de empleado responsable: ";
-        $numresponsable = trim(fgets(STDIN));
+        echo "Número de documento del responsable: ";
+        $dnie = trim(fgets(STDIN));
         $responsable = new ResponsableV();
-        $existe = $responsable->buscar($numresponsable);
+        $existe = $responsable->buscar($dnie);
         if (!$existe) {
-            echo "El número de empleado no existe.\n";
+            echo "El número de documento no existe.\n";
             echo "Ingresar nuevo responsable\n";
             ingresarResponsable();
             $existe = $empresa->buscar($idViaje);
@@ -612,6 +612,7 @@ function gestionEmpresas()
             case 2:
                 $empresa = new Empresa();
                 if (existenEmpresas()) {
+                    listarEmpresa();
                     echo "Ingrese el ID de la empresa a modificar: ";
                     $id = trim(fgets(STDIN));
                     if ($empresa->buscar($id)) {
@@ -625,6 +626,7 @@ function gestionEmpresas()
                 break;
 
             case 3:
+                listarEmpresa();
                 eliminarEmpresa(); // agregar checkeos
                 break;
 
@@ -655,8 +657,8 @@ function gestionViajes()
                 break;
 
             case 2:
-                
                 if (existenViajes()) {
+                    listarViajes();
                     echo "Ingrese el ID del viaje a modificar: ";
                     $id = trim(fgets(STDIN));
                     if ($viaje->buscar($id)) {
@@ -670,6 +672,7 @@ function gestionViajes()
                 break;
 
             case 3:
+                listarViajes();
                 eliminarViaje();
                 break;
 
@@ -716,10 +719,12 @@ function gestionPasajeros()
                 break;
 
             case 2:
+                listarPasajero();
                 modificarPasajero();
                 break;
 
             case 3:
+                listarPasajero();
                 eliminarPasajero();
                 break;
 
@@ -752,10 +757,12 @@ function gestionResponsable()
                 break;
 
             case 2:
+                listarResponsable();
                 modificarResponsable();
                 break;
 
             case 3:
+                listarResponsable();
                 eliminarResponsable();
                 break;
 

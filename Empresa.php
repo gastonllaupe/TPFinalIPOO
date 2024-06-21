@@ -101,7 +101,7 @@ class Empresa
                 $array = array();
                 while($row2 = $base->Registro()){
                     $empresa = new Empresa();
-                    $empresa->buscar($row2['idempresa']); // reemplazar buscar por el metodo cargar
+                    $empresa->buscar($row2['idempresa']); 
                     $array[] = $empresa;
                 }
             }else{
