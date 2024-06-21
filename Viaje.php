@@ -110,7 +110,7 @@ class Viaje
             "\nDestino: " . $this->getVdestino() .
             "\nCantidad maxima de pasajeros: " . $this->getVcantMaxPasajeros() .
             "\nEmpresa: \n" . $this->getObjempresa() .
-            "\nNumero del empleado Responsable: \n" . $empleado->getNumero() .
+            "\nDatos del empleado: \n" . $empleado .
             "\nImporte: $" . $this->getVimporte() ."\n";
     }
 

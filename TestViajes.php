@@ -41,7 +41,8 @@ function menuViaje()
     echo "2) Modificar Viaje\n";
     echo "3) Eliminar Viaje\n";
     echo "4) Listar Viaje\n";
-    echo "5) Volver al Menú Principal\n";
+    echo "5) Listar pasajeros en viaje\n";
+    echo "6) Volver al Menú Principal\n";
     echo "------------------------\n";
     echo "Seleccione una opción: ";
 }
@@ -640,6 +641,7 @@ function gestionViajes()
     do {
         menuViaje();
         $opcionViaje = trim(fgets(STDIN));
+        $viaje = new Viaje();
 
         switch ($opcionViaje) {
 
@@ -648,7 +650,7 @@ function gestionViajes()
                 break;
 
             case 2:
-                $viaje = new Viaje();
+                
                 if (existenViajes()) {
                     echo "Ingrese el ID del viaje a modificar: ";
                     $id = trim(fgets(STDIN));
@@ -669,15 +671,29 @@ function gestionViajes()
             case 4:
                 listarViajes();
                 break;
-
             case 5:
+                if (existenViajes()) {
+                    echo "Ingrese el ID del viaje a listar: ";
+                    $id = trim(fgets(STDIN));
+                    if ($viaje->buscar($id)) {
+                        $pasajeros=listadoPasajerosEnViaje($id);
+                        listarArray($pasajeros);
+                    } else {
+                        echo "No se encontro el viaje con el ID solicitado.\n";
+                    }
+                } else {
+                    echo "Opcion no disponible. Inserte un viaje para continuar.\n";
+                }
+                break;
+
+            case 6:
                 echo "Volviendo al Menú Principal\n";
                 break;
 
             default:
-                echo "Opción inválida. Por favor, itnente de nuevo\n";
+                echo "Opción inválida. Por favor, intente de nuevo\n";
         }
-    } while ($opcionViaje != 5);
+    } while ($opcionViaje != 6);
 }
 
 
