@@ -549,8 +549,13 @@ function opcionesModificarViaje($viaje)
             case 2:
                 echo "Ingrese la nueva cantidad de pasajeros: ";
                 $nuevo = trim(fgets(STDIN));
-                $viaje->setVcantmaxpasajeros($nuevo);
-                modificarViaje($viaje);
+                if (is_numeric($nuevo) && $nuevo > 0) {
+                    $viaje->setVcantmaxpasajeros($nuevo);
+                    modificarViaje($viaje);
+                    echo "Cantidad maxima modificada.";
+                } else {
+                    echo "Cantidad invalida, no se realizo la modificacion.";
+                }
                 break;
             case 3:
                 echo "Ingrese el ID de la nueva empresa: ";
@@ -674,9 +679,9 @@ function gestionViajes()
             case 5:
                 if (existenViajes()) {
                     echo "Ingrese el ID del viaje a listar: ";
-                    $id = trim(fgets(STDIN));
-                    if ($viaje->buscar($id)) {
-                        $pasajeros=listadoPasajerosEnViaje($id);
+                    $idViaje = trim(fgets(STDIN));
+                    if ($viaje->buscar($idViaje)) {
+                        $pasajeros=listadoPasajerosEnViaje($idViaje);
                         listarArray($pasajeros);
                     } else {
                         echo "No se encontro el viaje con el ID solicitado.\n";
