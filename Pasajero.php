@@ -44,11 +44,7 @@ class Pasajero extends Persona{
     public function setmensajeoperacion($mensajeoperacion){
 		$this->mensajeoperacion=$mensajeoperacion;
 	}
-
-    public function darPorcentajeIncremento(){
-        $porcentaje = 10;
-        return $porcentaje;
-    }
+	
 
     /**
 	 * Recupera los datos de una persona por dni

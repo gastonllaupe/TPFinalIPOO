@@ -270,20 +270,20 @@ function modificarPasajero()
         do {
 
             echo "Ingrese el nuevo ID del viaje: ";
-            $idviaje = trim(fgets(STDIN));
-            if (!is_numeric($idviaje) || $idviaje <= 0) {
+            $idViaje = trim(fgets(STDIN));
+            if (!is_numeric($idViaje) || $idViaje <= 0) {
                 echo "El ID del viaje debe ser un número positivo.\n";
                 $existe = false;
             } else {
                 $viaje = new Viaje();
-                $existe = $viaje->buscar($idviaje);
+                $existe = $viaje->buscar($idViaje);
                 if (!$existe) {
                     echo "El ID ingresado no existe.\n";
                 }
             }
-        } while (!$existe || !is_numeric($idviaje) || $idviaje <= 0);
+        } while (!$existe || !is_numeric($idViaje) || $idViaje <= 0);
 
-        $pasajero->cargar($nrodoc, $nombre, $apellido, $telefono, $idviaje);
+        $pasajero->cargar($nrodoc, $nombre, $apellido, $telefono, $idViaje);
         if ($pasajero->modificar()) {
             echo "Pasajero modificado con éxito.\n";
         } else {
