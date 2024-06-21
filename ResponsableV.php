@@ -48,15 +48,15 @@ class ResponsableV extends Persona{
 
 
     //funciones bd
-    public function Buscar($id){
+    public function Buscar($dni){
         
             $base = new BaseDatos();
-            $consulta = "Select * from responsable where rnumeroempleado= " . $id;
+            $consulta = "Select * from responsable where rdocumento= " . $dni;
             $rta = false;
             if($base->Iniciar()){
                 if($base->Ejecutar($consulta)){
                     if($row2 = $base->Registro()){
-                        parent::Buscar($id);
+                        parent::Buscar($dni);
                         $this->setNumero($row2['rnumeroempleado']);
                         $this->setLicencia($row2['rnumerolicencia']);
 
@@ -80,13 +80,13 @@ class ResponsableV extends Persona{
         if($condicion != ''){
             $consulta = $consulta . ' where ' . $condicion;
         }
-        $consulta.=" ORDER BY rnumeroempleado";
+        $consulta.=" ORDER BY rdocumento";
         if($base->Iniciar()){
             if($base->Ejecutar($consulta)){
                 $array = array();
             while($row2 = $base->Registro()){
                 $responsable = new ResponsableV();
-                $responsable->buscar($row2['rnumeroempleado']);
+                $responsable->buscar($row2['rdocumento']);
                 array_push($array,$responsable);
             }
             }else{
@@ -105,8 +105,8 @@ class ResponsableV extends Persona{
 		$resp = false;
 
 		if (parent::insertar()) {
-			$consultaInsertar = "INSERT INTO responsable (rdocumento, rnombre, rapellido, rnumerolicencia)
-							 VALUES ('".$this->getNrodoc()."','".$this->getNombre()."','".$this->getApellido()."','".$this->getLicencia ()."')";
+			$consultaInsertar = "INSERT INTO responsable (rdocumento, rnumerolicencia)
+							 VALUES ('".$this->getNrodoc()."','".$this->getLicencia ()."')";
 
 			if ($base->Iniciar()) {
 				if ($base->Ejecutar($consultaInsertar)) {
