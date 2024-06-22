@@ -29,11 +29,11 @@ CREATE TABLE viaje (
 	vdestino varchar(150),
     vcantmaxpasajeros int,
 	idempresa bigint,
-    rnumeroempleado bigint,
+    rdocumento varchar (15),
     vimporte int, /* estaba en float, lo cambie para que no salte error, preguntar despues*/
     PRIMARY KEY (idviaje),
     FOREIGN KEY (idempresa) REFERENCES empresa (idempresa),
-	FOREIGN KEY (rnumeroempleado) REFERENCES responsable (rnumeroempleado)
+	FOREIGN KEY (rdocumento) REFERENCES responsable (rdocumento)
     ON UPDATE CASCADE
     ON DELETE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT = 1;

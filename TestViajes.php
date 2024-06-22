@@ -350,6 +350,7 @@ function ingresarResponsable()
     } else {
         echo "Error al ingresar responsable: " . $responsable->getmensajeoperacion() . "\n";
     }
+    return $responsable;
 }
 
 function listarResponsable()
@@ -448,7 +449,7 @@ function crearViaje()
         if (!$existe) {
             echo "El número de documento no existe.\n";
             echo "Ingresar nuevo responsable\n";
-            ingresarResponsable();
+            $responsablef=ingresarResponsable();
             $existe = $empresa->buscar($idViaje);
         }
     } while (!$existe);
@@ -458,7 +459,7 @@ function crearViaje()
     $importe = trim(fgets(STDIN));
 
     // Cargar datos en el objeto Viaje
-    $viaje->cargar($destino, $cantMax, $empresa, $responsable, $importe);
+    $viaje->cargar($destino, $cantMax, $empresa, $responsablef, $importe);
 
     // Insertar viaje y verificar éxito
     if ($viaje->insertar()) {
