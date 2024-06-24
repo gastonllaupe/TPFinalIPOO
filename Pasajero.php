@@ -101,27 +101,7 @@ class Pasajero extends Persona{
 		 return $arreglo;
 	}
 
-	public function BuscarPorIdViaje($idViaje){
-		$base=new BaseDatos();
-		$consulta="SELECT * FROM pasajero WHERE idviaje=".$idViaje;
-		$resp= false;
-		if($base->Iniciar()){
-			if($base->Ejecutar($consulta)){
-				if($row=$base->Registro()){    
-					parent::Buscar($row['pdocumento']);
-					$this->setTelefono($row['ptelefono']);
-					$this->setIdViaje($row['idviaje']);
-					$resp= true;
-				}               
-			} else {
-				$this->setmensajeoperacion($base->getError());
-			}
-		} else {
-			$this->setmensajeoperacion($base->getError());
-		}       
-		return $resp;
-	}
-
+	
 	public function listarPorIdViaje($idViaje){
 		$arreglo = null;
 		$base=new BaseDatos();
