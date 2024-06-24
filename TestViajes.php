@@ -332,6 +332,17 @@ function listarPasajero()
     } else {
         echo "No hay pasajeros cargados.\n";
     }
+    
+}
+
+// Funcion que recibe un idViaje y retorna la lista de los pasajeros del mismo
+function listadoPasajerosEnViaje($idViaje)
+{
+    $pasajero = new Pasajero();
+    $condicion = 'idviaje = ' . $idViaje;
+    $pasajeros = $pasajero->listarPorIdViaje($condicion);
+    return $pasajeros;
+
 }
 
 // Funciones CRUD para Responsable
@@ -530,14 +541,6 @@ return $eliminar;
 }
 
 
-// Funcion que recibe un idViaje y retorna la lista de los pasajeros del mismo
-function listadoPasajerosEnViaje($idViaje)
-{
-    $pasajero = new Pasajero();
-    $condicion = 'idviaje = ' . $idViaje;
-    $pasajeros = $pasajero->listar($condicion);
-    return $pasajeros;
-}
 
 // funcion que muestra las opciones para modificar el viaje
 function opcionesModificarViaje($viaje)
@@ -699,7 +702,9 @@ function gestionViajes()
                     $idViaje = trim(fgets(STDIN));
                     if ($viaje->buscar($idViaje)) {
                         $pasajeros=listadoPasajerosEnViaje($idViaje);
+                        if ($pasajeros !==null){
                         listarArray($pasajeros);
+                    }
                     } else {
                         echo "No se encontro el viaje con el ID solicitado.\n";
                     }

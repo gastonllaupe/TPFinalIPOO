@@ -152,7 +152,7 @@ class Viaje
         $consulta = "SELECT * FROM Viaje WHERE idempresa=" . $id;
         if ($base->Iniciar()) {
             if ($base->Ejecutar($consulta)) {
-                if ($row2 = $base->Registro()) { // utilizar el metodo cargar (opcional)
+                if ($row2 = $base->Registro()) { 
                     $this->setIdviaje($row2['idviaje']);
                     $this->setVdestino($row2['vdestino']);
                     $this->setVcantMaxPasajeros($row2['vcantmaxpasajeros']);
