@@ -145,6 +145,35 @@ class Viaje
         return $rta;
     }
 
+    public function BuscarPorIdEmpresa($id)
+    {
+        $base = new BaseDatos();
+        $rta = false;
+        $consulta = "SELECT * FROM Viaje WHERE idempresa=" . $id;
+        if ($base->Iniciar()) {
+            if ($base->Ejecutar($consulta)) {
+                if ($row2 = $base->Registro()) { // utilizar el metodo cargar (opcional)
+                    $this->setIdviaje($row2['idviaje']);
+                    $this->setVdestino($row2['vdestino']);
+                    $this->setVcantMaxPasajeros($row2['vcantmaxpasajeros']);
+                    $empresa = new Empresa();
+                    $empresa->buscar($row2['idempresa']);
+                    $this->setObjempresa($empresa);
+                    $responsable = new ResponsableV();
+                    $responsable->buscar($row2['rdocumento']);
+                    $this->setRdocumento($responsable);
+                    $this->setVimporte($row2['vimporte']);
+                    $rta = true;
+                }
+            } else {
+                $this->setMensaje($base->getError());
+            }
+        } else {
+            $this->setMensaje($base->getError());
+        }
+        return $rta;
+    }
+
     public static function listar($condicion = '')
     {
         $array = null;

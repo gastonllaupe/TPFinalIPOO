@@ -116,10 +116,12 @@ function eliminarEmpresa()
     $idEm = trim(fgets(STDIN));
 
     if ($empresa->buscar($idEm)) {
+        if (existenViajesEmpresa($idEm)){
         if ($empresa->eliminar()) {
             echo "Empresa eliminada con éxito.\n";
         } else {
             echo "Error al eliminar empresa: " . $empresa->getMensaje() . "\n";
+        }
         }
     } else {
         echo "Empresa no encontrada.\n";
@@ -514,6 +516,17 @@ function existenViajes()
     $viajes = $viaje->listar();
     $hayViajesCargados = sizeof($viajes) > 0;
     return $hayViajesCargados;
+}
+
+function existenViajesEmpresa($idEmpresa){
+    $eliminar = true;
+    $viaje = new Viaje();
+    $viajeEncontrado = $viaje->BuscarPorIdEmpresa($idEmpresa);
+if ($viajeEncontrado) {
+    echo "No se puede eliminar esta empresa porque existen viajes asociados a ella \n";
+    $eliminar = false;
+}
+return $eliminar;
 }
 
 
