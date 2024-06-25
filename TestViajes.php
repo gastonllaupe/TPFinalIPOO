@@ -116,10 +116,12 @@ function eliminarEmpresa()
     $idEm = trim(fgets(STDIN));
 
     if ($empresa->buscar($idEm)) {
+        if (existenViajesEmpresa($idEm)){
         if ($empresa->eliminar()) {
             echo "Empresa eliminada con éxito.\n";
         } else {
             echo "Error al eliminar empresa: " . $empresa->getMensaje() . "\n";
+        }
         }
     } else {
         echo "Empresa no encontrada.\n";
@@ -330,6 +332,17 @@ function listarPasajero()
     } else {
         echo "No hay pasajeros cargados.\n";
     }
+    
+}
+
+// Funcion que recibe un idViaje y retorna la lista de los pasajeros del mismo
+function listadoPasajerosEnViaje($idViaje)
+{
+    $pasajero = new Pasajero();
+    $condicion = 'idviaje = ' . $idViaje;
+    $pasajeros = $pasajero->listarPorIdViaje($condicion);
+    return $pasajeros;
+
 }
 
 // Funciones CRUD para Responsable
@@ -350,6 +363,7 @@ function ingresarResponsable()
     } else {
         echo "Error al ingresar responsable: " . $responsable->getmensajeoperacion() . "\n";
     }
+    return $responsable;
 }
 
 function listarResponsable()
@@ -373,18 +387,18 @@ function existeResponsable()
 
 function modificarResponsable()
 {
-    echo "Ingrese el número de empleado del responsable a modificar: ";
-    $numEmpleado = trim(fgets(STDIN));
+    echo "Ingrese el número de documento del responsable a modificar: ";
+    $dnie = trim(fgets(STDIN));
     $responsable = new ResponsableV();
 
-    if ($responsable->buscar($numEmpleado)) {
+    if ($responsable->buscar($dnie)) {
         echo "Ingrese el nuevo número de licencia: ";
         $numLicencia = trim(fgets(STDIN));
         echo "Ingrese el nuevo nombre: ";
         $nombre = trim(fgets(STDIN));
         echo "Ingrese el nuevo apellido: ";
         $apellido = trim(fgets(STDIN));
-        $responsable->cargar($numEmpleado, $numLicencia, $nombre, $apellido);
+        $responsable->cargar($dnie,$nombre, $apellido, $numLicencia);
 
         if ($responsable->modificar()) {
             echo "Responsable modificado con éxito.\n";
@@ -441,14 +455,14 @@ function crearViaje()
 
     // Validar existencia del empleado responsable por número de empleado
     do {
-        echo "Número de empleado responsable: ";
-        $numresponsable = trim(fgets(STDIN));
+        echo "Número de documento del responsable: ";
+        $dnie = trim(fgets(STDIN));
         $responsable = new ResponsableV();
-        $existe = $responsable->buscar($numresponsable);
+        $existe = $responsable->buscar($dnie);
         if (!$existe) {
-            echo "El número de empleado no existe.\n";
+            echo "El número de documento no existe.\n";
             echo "Ingresar nuevo responsable\n";
-            ingresarResponsable();
+            $responsablef=ingresarResponsable();
             $existe = $empresa->buscar($idViaje);
         }
     } while (!$existe);
@@ -458,7 +472,7 @@ function crearViaje()
     $importe = trim(fgets(STDIN));
 
     // Cargar datos en el objeto Viaje
-    $viaje->cargar($destino, $cantMax, $empresa, $responsable, $importe);
+    $viaje->cargar($destino, $cantMax, $empresa, $responsablef, $importe);
 
     // Insertar viaje y verificar éxito
     if ($viaje->insertar()) {
@@ -515,15 +529,18 @@ function existenViajes()
     return $hayViajesCargados;
 }
 
-
-// Funcion que recibe un idViaje y retorna la lista de los pasajeros del mismo
-function listadoPasajerosEnViaje($idViaje)
-{
-    $pasajero = new Pasajero();
-    $condicion = 'idviaje = ' . $idViaje;
-    $pasajeros = $pasajero->listar($condicion);
-    return $pasajeros;
+function existenViajesEmpresa($idEmpresa){
+    $eliminar = true;
+    $viaje = new Viaje();
+    $viajeEncontrado = $viaje->BuscarPorIdEmpresa($idEmpresa);
+if ($viajeEncontrado) {
+    echo "No se puede eliminar esta empresa porque existen viajes asociados a ella \n";
+    $eliminar = false;
 }
+return $eliminar;
+}
+
+
 
 // funcion que muestra las opciones para modificar el viaje
 function opcionesModificarViaje($viaje)
@@ -612,6 +629,7 @@ function gestionEmpresas()
             case 2:
                 $empresa = new Empresa();
                 if (existenEmpresas()) {
+                    listarEmpresa();
                     echo "Ingrese el ID de la empresa a modificar: ";
                     $id = trim(fgets(STDIN));
                     if ($empresa->buscar($id)) {
@@ -625,6 +643,8 @@ function gestionEmpresas()
                 break;
 
             case 3:
+                listarEmpresa();
+                eliminarEmpresa(); // agregar checkeos
                 eliminarEmpresa();
                 break;
 
@@ -655,8 +675,8 @@ function gestionViajes()
                 break;
 
             case 2:
-                
                 if (existenViajes()) {
+                    listarViajes();
                     echo "Ingrese el ID del viaje a modificar: ";
                     $id = trim(fgets(STDIN));
                     if ($viaje->buscar($id)) {
@@ -670,6 +690,7 @@ function gestionViajes()
                 break;
 
             case 3:
+                listarViajes();
                 eliminarViaje();
                 break;
 
@@ -682,7 +703,9 @@ function gestionViajes()
                     $idViaje = trim(fgets(STDIN));
                     if ($viaje->buscar($idViaje)) {
                         $pasajeros=listadoPasajerosEnViaje($idViaje);
+                        if ($pasajeros !==null){
                         listarArray($pasajeros);
+                    }
                     } else {
                         echo "No se encontro el viaje con el ID solicitado.\n";
                     }
@@ -716,10 +739,12 @@ function gestionPasajeros()
                 break;
 
             case 2:
+                listarPasajero();
                 modificarPasajero();
                 break;
 
             case 3:
+                listarPasajero();
                 eliminarPasajero();
                 break;
 
@@ -752,10 +777,12 @@ function gestionResponsable()
                 break;
 
             case 2:
+                listarResponsable();
                 modificarResponsable();
                 break;
 
             case 3:
+                listarResponsable();
                 eliminarResponsable();
                 break;
 

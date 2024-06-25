@@ -101,6 +101,28 @@ class Pasajero extends Persona{
 		 return $arreglo;
 	}
 
+	
+	public function listarPorIdViaje($idViaje){
+		$arreglo = null;
+		$base=new BaseDatos();
+		$consulta="SELECT * FROM pasajero WHERE idviaje=".$idViaje." ORDER BY pdocumento";
+		if($base->Iniciar()){
+			if($base->Ejecutar($consulta)){                
+				$arreglo= array();
+				while($row=$base->Registro()){
+					$obj=new Pasajero();
+					$obj->Buscar($row['pdocumento']);
+					array_push($arreglo,$obj);
+				}
+			} else {
+				$this->setmensajeoperacion($base->getError());
+			}
+		} else {
+			$this->setmensajeoperacion($base->getError());
+		}   
+		return $arreglo;
+	}
+
 	public function modificar(){
 		$resp =false; 
 		$base=new BaseDatos();

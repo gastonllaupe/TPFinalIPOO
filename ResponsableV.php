@@ -13,7 +13,9 @@ class ResponsableV extends Persona{
         $this->rnumeroLicencia = "";
     }
 
-
+    public function getNrodoc(){
+		return parent::getNrodoc();
+	}
     public function getNumero (){
         return $this->rnumeroEmpleado;
     }
