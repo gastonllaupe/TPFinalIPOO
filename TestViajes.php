@@ -117,11 +117,11 @@ function eliminarEmpresa()
 
     if ($empresa->buscar($idEm)) {
         if (existenViajesEmpresa($idEm)){
-        if ($empresa->eliminar()) {
-            echo "Empresa eliminada con éxito.\n";
-        } else {
-            echo "Error al eliminar empresa: " . $empresa->getMensaje() . "\n";
-        }
+            if ($empresa->eliminar()) {
+                echo "Empresa eliminada con éxito.\n";
+            } else {
+                echo "Error al eliminar empresa: " . $empresa->getMensaje() . "\n";
+            }
         }
     } else {
         echo "Empresa no encontrada.\n";
@@ -235,10 +235,15 @@ function ingresarPasajero()
     $idViaje = $viaje->getIdviaje();
     $pasajero->cargar($nrodoc, $nombre, $apellido, $telefono, $idViaje);
 
-    if ($pasajero->insertar()) {
-        echo "Pasajero ingresado con éxito.\n";
+    $pasajeros = listadoPasajerosEnViaje($idViaje);
+    if (count($pasajeros) < $viaje->getVcantmaxpasajeros()) {
+        if ($pasajero->insertar()) {
+            echo "Pasajero ingresado con éxito.\n";
+        } else {
+            echo "Error al ingresar pasajero: " . $pasajero->getmensajeoperacion() . "\n";
+        }
     } else {
-        echo "Error al ingresar pasajero: " . $pasajero->getmensajeoperacion() . "\n";
+        echo "No se pueden ingresar mas pasajeros al viaje. Supero el limite.\n";
     }
 }
 
@@ -349,14 +354,31 @@ function listadoPasajerosEnViaje($idViaje)
 function ingresarResponsable()
 {
     $responsable = new ResponsableV();
-    echo "Ingrese el número de documento: ";
-    $nroDoc = trim(fgets(STDIN));
+    do {
+        echo "Ingrese el nuevo número de documento: ";
+        $nroDoc = trim(fgets(STDIN));
+
+        if (!is_numeric($nroDoc) || $nroDoc <= 0) {
+            echo "El número de documento debe ser un número positivo.\n";
+            $existe = true;
+        } else {
+            $existe = $responsable->buscar($nroDoc);
+            if ($existe) {
+                echo "El Documento ingresado ya existe.\n";
+            }
+        }
+    } while ($existe || !is_numeric($nroDoc) || $nroDoc <= 0);
+
     echo "Ingrese el nombre: ";
     $nombre = trim(fgets(STDIN));
     echo "Ingrese el apellido: ";
     $apellido = trim(fgets(STDIN));
-    echo "Ingrese el número de licencia: ";
-    $numLicencia = trim(fgets(STDIN));
+
+    do {
+        echo "Ingrese el número de licencia: ";
+        $numLicencia = trim(fgets(STDIN));
+    } while (!is_numeric($numLicencia) || $numLicencia < 0);
+
     $responsable->cargar($nroDoc, $nombre, $apellido, null, $numLicencia);
     if ($responsable->insertar()) {
         echo "Responsable ingresado con éxito.\n";
@@ -373,7 +395,7 @@ function listarResponsable()
         $responsables = $responsable->listar();
         listarArray($responsables);
     } else {
-        echo "No hay responsables cargados";
+        echo "No hay responsables cargados\n";
     }
 }
 
@@ -444,6 +466,7 @@ function crearViaje()
 
     // Validar existencia de la empresa por ID
     do {
+        listarEmpresa();
         echo "ID de la empresa: ";
         $idViaje = trim(fgets(STDIN));
         $empresa = new Empresa();
@@ -455,6 +478,7 @@ function crearViaje()
 
     // Validar existencia del empleado responsable por número de empleado
     do {
+        listarResponsable();
         echo "Número de documento del responsable: ";
         $dnie = trim(fgets(STDIN));
         $responsable = new ResponsableV();
@@ -462,6 +486,10 @@ function crearViaje()
         if (!$existe) {
             echo "El número de documento no existe.\n";
             echo "Ingresar nuevo responsable\n";
+            $responsablef=ingresarResponsable();
+            $existe = $empresa->buscar($idViaje);
+        } else {
+            echo "Este responsable ya esta asignado a un viaje.\n";
             $responsablef=ingresarResponsable();
             $existe = $empresa->buscar($idViaje);
         }
