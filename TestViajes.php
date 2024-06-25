@@ -625,7 +625,7 @@ function gestionEmpresas()
                 break;
 
             case 3:
-                eliminarEmpresa(); // agregar checkeos
+                eliminarEmpresa();
                 break;
 
             case 4:
