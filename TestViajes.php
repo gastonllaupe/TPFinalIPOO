@@ -344,8 +344,7 @@ function listarPasajero()
 function listadoPasajerosEnViaje($idViaje)
 {
     $pasajero = new Pasajero();
-    $condicion = 'idviaje = ' . $idViaje;
-    $pasajeros = $pasajero->listarPorIdViaje($condicion);
+    $pasajeros = $pasajero->listarPorIdViaje($idViaje);
     return $pasajeros;
 
 }
