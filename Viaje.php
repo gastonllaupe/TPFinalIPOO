@@ -9,6 +9,7 @@ class Viaje
     private $rdocumento; // OBJETO RESPONSABLE
     private $vimporte;
     private $mensaje;
+    private $colPasajeros;
 
     //constructor
     public function __construct()
@@ -19,6 +20,7 @@ class Viaje
         $this->vimporte = '';
         $this->mensaje = '';
         $this->rdocumento = '';
+        $this->colPasajeros = [];
     }
 
     public function cargar($vdestino, $vcantmaxpasajeros, $objempresa, $rdocumento, $vimporte=null)
@@ -40,6 +42,14 @@ class Viaje
     public function setIdviaje($idviaje)
     {
         $this->idviaje = $idviaje;
+    }
+
+    public function getColPasajeros(){
+        return $this->colPasajeros;
+    }
+
+    public function setColPasajeros($nuevo){
+        $this->colPasajeros = $nuevo;
     }
 
     public function getVdestino()
@@ -102,9 +112,18 @@ class Viaje
         $this->mensaje = $nuevo;
     }
 
+    private function listarArray($array)
+{
+    $texto = "\n";
+    foreach ($array as $item) {
+        $texto = $texto . $item . "\n";
+    }
+    return $texto;
+}
     //toString
     public function __toString()
     {
+        $arregloPasajeros = $this->getColPasajeros();
         $empleado = $this->getRdocumento();
         return "----------------------------------
             ID: " . $this->getIdviaje() .
@@ -112,7 +131,8 @@ class Viaje
             "\nCantidad maxima de pasajeros: " . $this->getVcantMaxPasajeros() .
             "\n" . $this->getObjempresa() .
             "\nDatos del empleado: \n" . $empleado .
-            "\nImporte: $" . $this->getVimporte() ."\n";
+            "\nImporte: $" . $this->getVimporte() ."\n".
+            "\nPasajeros: " . $this->listarArray($arregloPasajeros) ."\n";
     }
 
     //funciones bd
@@ -134,7 +154,10 @@ class Viaje
                     $responsable->buscar($row2['rdocumento']);
                     $this->setRdocumento($responsable);
                     $this->setVimporte($row2['vimporte']);
+                    $pasajero = new Pasajero();
+                    $this->setColPasajeros($pasajero->listarPorIdViaje($id));
                     $rta = true;
+                    
                 }
             } else {
                 $this->setMensaje($base->getError());

@@ -460,8 +460,11 @@ function crearViaje()
     $destino = trim(fgets(STDIN));
 
     // Solicitar cantidad máxima de pasajeros
+    do {
     echo "Cantidad máxima de pasajeros: ";
     $cantMax = trim(fgets(STDIN));
+    }while ($cantMax <0);
+    
 
     // Validar existencia de la empresa por ID
     do {
